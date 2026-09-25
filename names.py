@@ -26,7 +26,7 @@ NAMES_L_RU = ['Ivanov','Smirnov','Kuznetsov','Popov','Sokolov','Lebedev','Kozlov
 
 NAMES_M_PL = ['Jan','Stanisław','Andrzej','Józef','Tadeusz','Jerzy','Zbigniew','Krzysztof','Henryk','Ryszard','Kazimierz','Marek','Marian','Piotr','Adam','Wiesław','Grzegorz','Paweł','Dariusz','Michał']
 NAMES_W_PL = ['Anna','Maria','Katarzyna','Małgorzata','Agnieszka','Barbara','Ewa','Elżbieta','Zofia','Joanna','Teresa','Jadwiga','Danuta','Halina','Irena','Beata','Helena','Bożena','Marta','Aleksandra']
-NAMES_L_PL = ['Nowak','Kowalski','Wiśniewski','Wójcik','Kowalczyk','Kamiński','Lewandowski','Zieliński','Szymański','Woźniak','Dąbrowski','Kozłowski','Jankowski','Mazur','Wojciechowski','Kwiatkowski','Krawczyk','Kaczmarek','Piotrowski','Grabowski','Nowakowski','Pawłowski','Michalski','Nowicki','Adamczyk','Dudek','Zając','Wieczorek','Jabłoński','Król','Majewski','Olszewski','Jaworski','Malinowski','Pająk','Walczak','Stępień','Górski','Sikora','Ostrowski','Borkowski','Cieślak','Sawicki','Sokołowski','Maciejewski','Szulc','Kucharski','Włodarczyk','Lis','Bąk','Chmielewski']
+NAMES_L_PL = ['Nowak','Kowalski','Wiśniewski','Wójcik','Kowalczyk','Kamiński','Lewandowski','Zieliński','Szymański','Woźniak','Dąbrowski','Kozłowski','Jankowski','Mazur','Wojciechowski','Kwiatkowski','Krawczyk','Kaczmarek','Piotrowski','Grabowski','Nowakowski','Pawłowski','Michalski','Nowicki','Adamczyk','Dudek','Zając','Więczorek','Jabłoński','Król','Majewski','Olszewski','Jaworski','Malinowski','Pająk','Walczak','Stępień','Górski','Sikora','Ostrowski','Borkowski','Cieślak','Sawicki','Sokołowski','Maciejewski','Szulc','Kucharski','Włodarczyk','Lis','Bąk','Chmielewski']
 
 NAMES_M_EL = ['Alexander','Andreas','Christos','Demetrios','Dimitrios','Elias','Georgios','Ioannis','Konstantinos','Kyriakos','Leonidas','Michail','Nikolaos','Panagiotis','Petros','Spyridon','Stavros','Theodoros','Vasilios','Yiannis']
 NAMES_W_EL = ['Alexandra','Anastasia','Angeliki','Athina','Christina','Despina','Eleni','Georgia','Ioanna','Katerina','Konstantina','Maria','Nefeli','Olga','Panagiota','Paraskevi','Sofia','Theodora','Vasiliki','Zoe']
@@ -42,11 +42,11 @@ NAMES_L_FR = ['Martin','Bernard','Dubois','Thomas','Robert','Richard','Petit','D
 
 NAMES_M_ES = ['Antonio','Manuel','José','Francisco','David','Juan','Javier','Daniel','Carlos','Luis','Miguel','Alejandro','Pablo','Adrián','Sergio','Álvaro','Fernando','Rafael','Marcos','Jorge']
 NAMES_W_ES = ['María','Carmen','Ana','Isabel','Laura','Sofía','Lucía','Elena','Paula','Marta','Julia','Patricia','Beatriz','Rosa','Andrea','Teresa','Clara','Alicia','Inés','Victoria']
-NAMES_L_ES = ['García','Fernández','González','Rodríguez','López','Martínez','Sánchez','Pérez','Martín','Gómez','Ruiz','Hernández','Jiménez','Díaz','Moreno','Álvarez','Romero','Navarro','Torres','Domínguez','Ramos','Vázquez','Gil','Ramírez','Serrano','Blanco','Molina','Morales','Suárez','Ortega','Delgado','Castro','Ortiz','Rubio','Marín','Nuñez','Iglesias','Medina','Garrido','Cortés','Castillo','Calvo','Prieto','Santos','Lozano','Guerrero','Méndez','Cruz','Flores','Herrera']
+NAMES_L_ES = ['García','Fernández','González','Rodríguez','López','Martínez','Sánchez','Pérez','Martín','Gómez','Ruiz','Hernández','Jiménez','Díaz','Moreno','Álvarez','Romero','Navarro','Torres','Domínguez','Ramos','Vázquez','Gil','Ramírez','Serrano','Blanco','Molina','Morales','Suárez','Ortega','Delgado','Castro','Ortiz','Rubio','Marín','Núñez','Iglesias','Medina','Garrido','Cortés','Castillo','Calvo','Prieto','Santos','Lozano','Guerrero','Méndez','Cruz','Flores','Herrera']
 
 NAMES_M_PT = ['Miguel','Gabriel','Arthur','Davi','Bernardo','Lucas','Heitor','Pedro','Enzo','Lourenço','Rafael','Felipe','Matheus','Guilherme','Gustavo','Nicolas','Samuel','Caio','Joaquim','Vicente']
 NAMES_W_PT = ['Alice','Sofia','Laura','Valentina','Isabella','Manuela','Júlia','Heloísa','Luiza','Maria Eduarda','Beatriz','Maria Clara','Giovanna','Larissa','Mariana','Yasmim','Ana Clara','Isabelly','Rafaela','Esther']
-NAMES_L_PT = ['Silva','Santos','Oliveira','Souza','Rodrigues','Ferreira','Alves','Pereira','Lima','Gomes','Costa','Ribeiro','Martins','Jesus','Carvalho','Araújo','Fernandes','Barbosa','Rocha','Dias','Moreira','Mendes','Nascimento','Amorim','Duarte','Teixeira','Melo','Cortês','Cunha','Cavalcanti','Pires','Franco','Miranda','Domingues','Peixoto','Fonseca','Guimarães','Sampaio','Tavares','Andrade','Vieira','Leal','Aguiar','Brito','Farias','Barros','Bezerra','Campos','Cardoso','Dantas']
+NAMES_L_PT = ['Silva','Santos','Oliveira','Souza','Rodrigues','Ferreira','Alves','Pereira','Lima','Gomes','Costa','Ribeiro','Martins','de Jesus','Carvalho','Araújo','Fernandes','Barbosa','Rocha','Dias','Moreira','Mendes','Nascimento','Amorim','Duarte','Teixeira','Melo','Cortês','Cunha','Cavalcanti','Pires','Franco','Miranda','Domingues','Peixoto','Fonseca','Guimarães','Sampaio','Tavares','Andrade','Vieira','Leal','Aguiar','Brito','Farias','Barros','Bezerra','Campos','Cardoso','Dantas']
 
 NAMES_M_DE = ['Alexander','Andreas','Anton','Benedikt','Christian','Daniel','Elias','Felix','Florian','Jonas','Julian','Leon','Lukas','Manuel','Matthias','Michael','Niklas','Paul','Sebastian','Tobias']
 NAMES_W_DE = ['Anna','Claudia','Elena','Emilia','Emma','Franziska','Hannah','Ines','Johanna','Julia','Katharina','Leonie','Lena','Marie','Mia','Nadine','Nina','Paula','Sophie','Viktoria']
@@ -54,11 +54,11 @@ NAMES_L_DE = ['Müller','Schmidt','Schneider','Fischer','Weber','Meyer','Wagner'
 
 NAMES_M_IT = ['Alessandro','Andrea','Antonio','Carlo','Davide','Enzo','Francesco','Giorgio','Giovanni','Leonardo','Lorenzo','Luca','Marco','Matteo','Nicola','Paolo','Pietro','Riccardo','Simone','Tommaso']
 NAMES_W_IT = ['Alessia','Anna','Beatrice','Camilla','Chiara','Elena','Federica','Francesca','Ginevra','Giulia','Ilaria','Isabella','Laura','Lucia','Marta','Sara','Sofia','Valentina','Veronica','Viola']
-NAMES_L_IT = ['Rossi','Russo','Ferrari','Esposito','Bianchi','Romano','Colombo','Ricci','Marino','Greco','Bruno','Gallo','Conti','de Luca','Costa','Giordano','Mancini','Rizzo','Lombardi','Moretti','di Stefano','de Angelis','d\'Amico','Leone','Santoro','Vitali','Serra','Marchetti','Barbieri','Galli','de Santis','Caruso','Ferraro','Marini','Pellegrini','Fabbri','Silvestri','Rinaldi','Palumbo','Sanna','Villa','Fontana','Monti','de Rosa','Ferri','Gatti','Parisi','Lombardo','Messina','Amato']
+NAMES_L_IT = ['Rossi','Russo','Ferrari','Esposito','Bianchi','Romano','Colombo','Ricci','Marino','Greco','Bruno','Gallo','Conti','De Luca','Costa','Giordano','Mancini','Rizzo','Lombardi','Moretti','Di Stefano','De Angelis',"D'Amico",'Leone','Santoro','Vitali','Serra','Marchetti','Barbieri','Galli','De Santis','Caruso','Ferraro','Marini','Pellegrini','Fabbri','Silvestri','Rinaldi','Palumbo','Sanna','Villa','Fontana','Monti','De Rosa','Ferri','Gatti','Parisi','Lombardo','Messina','Amato']
 
 NAMES_M_JA = ['Haruto','Ren','Yuto','Sota','Riku','Kaito','Yuma','Daiki','Shota','Hayato','Takumi','Ryota','Yuki','Haru','Keita','Sho','Kota','Tsubasa','Minato','Jin']
 NAMES_W_JA = ['Yui','Aoi','Mio','Rin','Hina','Sakura','Riko','Yuna','Nana','Haruka','Saki','Mei','Ayaka','Noa','Reina','Kana','Misaki','Tomo','Yuri','Ema']
-NAMES_L_JA = ['Sato','Suzuki','Takahashi','Tanaka','Watanabe','Ito','Yamamoto','Nakamura','Kobayashi','Kato','Yoshida','Yamada','Sasaki','Yamaguchi','Saito','Matsumoto','Inoue','Kimura','Hayashi','Shimizu','Yamazaki','Ikeda','Hashimoto','Ishikawa','Yamashita','Ogawa','Ishibashi','Maeda','Fujita','Goto','Okada','Hasegawa','Murakami','Ono','Takeuchi','Kojima','Endo','Aoki','Fujii','Nishimura','Fukuda','Ota','Miura','Fujiwara','Okamoto','Matsuda','Nakagawa','Nakano','Morimoto','Arai','Ohno']
+NAMES_L_JA = ['Satō','Suzuki','Takahashi','Tanaka','Watanabe','Itō','Yamamoto','Nakamura','Kobayashi','Katō','Yoshida','Yamada','Sasaki','Yamaguchi','Saitō','Matsumoto','Inoue','Kimura','Hayashi','Shimizu','Yamazaki','Ikeda','Hashimoto','Ishikawa','Yamashita','Ogawa','Ishibashi','Maeda','Fujita','Gotō','Okada','Hasegawa','Murakami','Ono','Takeuchi','Kojima','Endō','Aoki','Fujii','Nishimura','Fukuda','Ōta','Miura','Fujiwara','Okamoto','Matsuda','Nakagawa','Nakano','Morimoto','Arai','Ōno']
 
 NAMES_M_IN = ['Arjun','Rohan','Aryan','Aditya','Vikram','Karthik','Rajesh','Siddharth','Dev','Rishabh','Amar','Nikhil','Suresh','Harish','Vijay','Prem','Deepak','Ganesh','Manoj','Anil']
 NAMES_W_IN = ['Priya','Ananya','Divya','Meera','Kavita','Sunita','Neha','Pooja','Shreya','Jyoti','Deepa','Asha','Leela','Madhuri','Sita','Tara','Anjali','Radha','Maya','Nisha']
@@ -78,7 +78,7 @@ ID_TITLES_M = ['Dr.', 'Drs.', 'Ir.', 'H.']
 ID_TITLES_W = ['Dr.', 'Drs.', 'Hj.']
 
 NAMES_M_NG = ['Adebayo','Olumide','Chinedu','Emeka','Ifeanyi','Tunde','Kayode','Segun','Uche','Kelechi','Ibrahim','Sani','Musa','Abdullahi','Bassey','Jide','Kunle','Nnamdi','Femi','Biodun']
-NAMES_W_NG = ['Adebimpe','Yetunde','Titilayo','Bukola','Sade','Ngozi','Chioma','Adaeze','Amaka','Ifunanya','Hauwa','Zainab','Aisha','Maryam','Fatima','Oluwaseun','Temiloluwa','Olamide','Tobi','Eno']
+NAMES_W_NG = ['Adebimpe','Yetunde','Titilayo','Bukola','Sade','Ngozi','Chioma','Adaeze','Amaka','Ifunanya','Hauwa','Zainab','Aisha','Maryam','Fatima','Oluwaseyi','Temiloluwa','Olamide','Folake','Eno']
 NAMES_L_NG = ['Adeboye','Adegoke','Adekunle','Adelaja','Adeniyi','Adeyemi','Adewole','Akinwunmi','Akintola','Balogun','Bamgbose','Fagbemi','Ige','Ogunleye','Ojo','Okeke','Olanrewaju','Olarewaju','Olawale','Olowo','Oluwaseyi','Oni','Oyebode','Oyeniyi','Sowole','Taiwo','Talabi','Achebe','Chukwu','Ekwueme','Ihejirika','Kanu','Mbachu','Mgbechi','Nwabueze','Nwachukwu','Nwadike','Nwagwu','Nwankwo','Nwapa','Nwaubani','Nwosu','Obasanjo','Obi','Okafor','Okonkwo','Okoro','Okoye','Okpara','Okorie','Onyejekwe']
 
 NAMES_M_AR = ['Adam','Omar','Ali','Yusuf','Ahmed','Hassan','Hussein','Mohammed','Khalid','Ibrahim','Mustafa','Tariq','Malik','Zayn','Rayan','Sami','Karim','Faisal','Jamal','Rashid']
@@ -87,15 +87,15 @@ NAMES_L_AR = ['Abbas','Abdel','Abdullah','Abed','Ahmad','al-Fayed','al-Khatib','
 
 NAMES_M_PH = ['Jacob','Nathaniel','Gabriel','Nathan','Ethan','Ezekiel','Angelo','James','Joshua','Kyle','Matthew','Zion','Liam','Jayden','Noah','Christian','Daniel','John Mark','Marvic','Dakila']
 NAMES_W_PH = ['Althea','Angel','Samantha','Princess','Nathalie','Sofia','Sophia','Jasmine','Andrea','Angela','Chloe','Zoey','Ayesha','Zia','Athena','Alexa','Janella','Ashley','Luzviminda','Maricar']
-NAMES_L_PH = ['Santos','Reyes','Cruz','Bautista','Ocampo','García','Mendoza','Torres','Villanueva','delos Reyes','Abad','Abella','Aguilar','Alba','Alcaraz','Alejandro','Almario','Alvarez','Aquino','Arroyo','Asuncion','Baltazar','Barretto','Bernal','Cabrera','Castro','Chavez','Clemente','Cordero','Corpus','Cortez','Dalisay','Daza','de Guzman','de Leon','del Castillo','del Rosario','dela Cruz','dela Peña','dela Torre','Diaz','Dominguez','Encarnacion','Enriquez','Esguerra','Esteban','Evangelista','Fernandez','Fernando','Flores','Francisco','Galang']
+NAMES_L_PH = ['Santos','Reyes','Cruz','Bautista','Ocampo','García','Mendoza','Torres','Villanueva','de los Reyes','Abad','Abella','Aguilar','Alba','Alcaraz','Alejandro','Almario','Alvarez','Aquino','Arroyo','Asuncion','Baltazar','Barretto','Bernal','Cabrera','Castro','Chavez','Clemente','Cordero','Corpus','Cortez','Dalisay','Daza','de Guzmán','de León','del Castillo','del Rosario','dela Cruz','dela Peña','dela Torre','Diaz','Dominguez','Encarnacion','Enriquez','Esguerra','Esteban','Evangelista','Fernandez','Fernando','Flores','Francisco','Galang']
 
 NAMES_M_ZA = ['Liam','Ethan','Lethabo','Junior','Lubanzi','Kagiso','David','Jason','Simba','Sipho','Daniel','Michael','Blessing','Gift','Thabo','Thomas','Banele','Neo','Nathan','Joshua']
-NAMES_W_ZA = ['Precious','Emma','Zoe','Amahle','Mia','Chloe','Isabella','Zoe','Olivia','Ava','Leah','Ayanda','Naledi','Thando','Nomvula','Nomsa','Zinhle','Sarah','Lisa','Amy']
+NAMES_W_ZA = ['Precious','Emma','Zoe','Amahle','Mia','Chloe','Isabella','Kagiso','Olivia','Ava','Leah','Ayanda','Naledi','Thando','Nomvula','Nomsa','Zinhle','Sarah','Lisa','Amy']
 NAMES_L_ZA = ['Nkosi','Zulu','Khumalo','Mthembu','Ndlovu','Ngcobo','Mkhize','Zungu','Cele','Majozi','Xulu','Mbatha','Mthethwa','Buthelezi','Dlamini','Gumede','Shabangu','Ntuli','Biyela','Hlongwane','Mhlongo','Zondo','Mbhele','Nxumalo','Zuma','Gwala','Mchunu','Ntanzi','Sithole','Ngubane','Shezi','Khuzwayo','Mnguni','Mdluli','Nkomo','Ngwenya','Nene','Mzobe','Maphumulo','Shandu','Sibiya','Nsele','Mbokazi','Mncwango','Ntshangase','Gcumisa','Dube','Mahlangu','Zikhali','Phakathi','Mvelase']
 
 NAMES_M_FA = ['Amir','Arash','Behzad','Kourosh','Dariush','Ehsan','Farhad','Hamed','Hossein','Kamran','Kian','Mehdi','Navid','Omid','Pedram','Reza','Saeed','Shahin','Sohrab','Yashar']
 NAMES_W_FA = ['Aida','Anahita','Arezoo','Bahar','Donya','Elaheh','Fatemeh','Golnaz','Mahsa','Marjan','Maryam','Nazanin','Neda','Parisa','Roya','Sanaz','Shirin','Simin','Yalda','Zara']
-NAMES_L_FA = ['Abbaszadeh','Abdi','Ahmadi','Akbari','Alavi','Amini','Ansari','Asadi','Asghari','Azimi','Babaei','Bagheri','Bahrami','Barati','Behnam','Dastani','Davari','Ebrahimi','Ehsani','Esfahani','Fahim','Farahani','Farhadi','Fathi','Ghanbari','Ghazali','Gholami','Ghorbani','Habibi','Haghighat','Hajian','Hakimi','Hamidi','Hashemi','Hassani','Hejazi','Hosseini','Imani','Jafari','Jahan','Jamali','Javadi','Karami','Karimi','Kashani','Kazemi','Khadem','Khalili','Kiani']
+NAMES_L_FA = ['Abbaszadeh','Abdi','Ahmadi','Akbari','Alavi','Amini','Ansari','Asadi','Asghari','Azimi','Babaei','Bagheri','Bahrami','Barati','Bakhshi','Dastani','Davari','Ebrahimi','Ehsani','Esfahani','Fahim','Farahani','Farhadi','Fathi','Ghanbari','Ghazali','Gholami','Ghorbani','Habibi','Haghighat','Hajian','Hakimi','Hamidi','Hashemi','Hassani','Hejazi','Hosseini','Imani','Jafari','Jalali','Jamali','Javadi','Karami','Karimi','Kashani','Kazemi','Khadem','Khalili','Kiani']
 
 NAMES_M_TR = ['Kerem','Emre','Arda','Deniz','Efe','Can','Barış','Alp','Kaan','Umut','Ozan','Yiğit','Doruk','Cem','Mert','Batu','Onur','Selim','Volkan','Mete']
 NAMES_W_TR = ['Elif','Zeynep','Ayşe','Fatma','Defne','Esra','İrem','Seda','Melis','Aslı','Ceren','Dilara','Gizem','İpek','Leyla','Naz','Özlem','Pınar','Serra','Zehra']
@@ -103,11 +103,11 @@ NAMES_L_TR = ['Yılmaz','Kaya','Demir','Şahin','Çelik','Yıldız','Öztürk','
 
 NAMES_M_KR = ['Min-jun','Seo-jun','Do-yun','Si-woo','Ha-jun','Ji-ho','Jun-seo','Eun-woo','Yu-jun','Jae-hyun','Jun-ho','Seung-min','Hyun-woo','Ji-hun','Min-jae','Sung-min','Dong-hyun','Woo-jin','Jin-woo','Tae-hyun']
 NAMES_W_KR = ['Seo-yeon','Ha-yoon','Ji-woo','Seo-hyun','Ha-eun','Min-jung','Yeon-woo','Ji-yoo','Soo-ah','Ji-an','Chae-won','Eun-ji','Yu-na','Hye-rim','Da-bin','Ji-hye','Na-yoon','Ga-eul','Bom','Sol']
-NAMES_L_KR = ['Kim','Lee','Park','Choi','Jung','Kang','Cho','Yoon','Chang','Lim','Shin','Yoo','Han','Oh','Seo','Son','Bang','Baek','Hwang','Song','Hong','Yang','Go','Moon','Nam','Do','Ryu','Cha','Ma','Sohn','Namgoong','Hwangbo','Jegal','Seonu','Sagong','Dokgo','Dongbang','Seomun','Namman','Jangso','An','Byun','Chun','Gwak','Gyeom','Ha','Heo','Hyeon','Jin','Joo','Koo']
+NAMES_L_KR = ['Kim','Lee','Park','Choi','Jung','Kang','Cho','Yoon','Jang','Lim','Shin','Yoo','Han','Oh','Seo','Son','Bang','Baek','Hwang','Song','Hong','Yang','Go','Moon','Nam','Do','Ryu','Cha','Ma','Sohn','Namgoong','Hwangbo','Jegal','Seonu','Sagong','Dokgo','Dongbang','Seomun','Namman','Jangso','An','Byun','Chun','Gwak','Gyeom','Ha','Heo','Hyeon','Jin','Joo','Koo']
 
 NAMES_M_TH = ['Thanawat','Natthawut','Kittipong','Chananan','Piyawat','Worawut','Supachai','Wichai','Atthaphon','Sarawut','Jirawat','Thitipong','Siraphop','Panuwat','Ratchanon','Mongkol','Surachai','Arunroj','Krittin','Somchai']
 NAMES_W_TH = ['Waraporn','Thanyarat','Nattaporn','Supaluck','Phatchara','Chompunuch','Jutarat','Siriluck','Rapeepat','Ploypailin','Pimnara','Thanaporn','Kanyanart','Narinya','Wimonrat','Patcharee','Suthida','Saowalak','Kanchana','Malinee']
-NAMES_L_TH = ['Sriworakul','Na Bangchang','Akkharawiboon','Methawikrai','Wattanasiri','Phokinthara','Rungsimanont','Kanyamethi','Siriwat','Phumisawat','Chantraprapa','Thanakul','Phongphiphat','Rattanaipaisan','Wisesuk','Ketkaew','Chotikawirot','Ampaiphisut','Serithada','Inthrasuwan','Kanokwan','Chaimongkol','Suphasawat','Wong-arun','Rueangrot','Phiphatkul','Srisawat','Woranyu','Nanthawisan','Amornstit','Bunnyong','Piyamaphon','Mettaprateep','Sirinthon','Chaloemchai','Krairerk','Siripong','Thanyawat','Prasompon','Weeratham','Suksathit','Komen','Udomrat','Thewanruedi','Phanthuwet','Wimonmat','Charuwan','Pantharanont','Sakthamrong','Paisansin']
+NAMES_L_TH = ['Sriworakul','Boonmee','Akkharawiboon','Methawikrai','Wattanasiri','Phokinthara','Rungsimanont','Kanyamethi','Siriwat','Phumisawat','Chantraprapa','Thanakul','Phongphiphat','Rattanaipaisan','Wisesuk','Ketkaew','Chotikawirot','Ampaiphisut','Serithada','Inthrasuwan','Kanokwan','Chaimongkol','Suphasawat','Chotikawanich','Rueangrot','Phiphatkul','Srisawat','Woranyu','Nanthawisan','Amornstit','Bunnyong','Piyamaphon','Mettaprateep','Sirinthon','Chaloemchai','Krairerk','Siripong','Thanyawat','Prasompon','Weeratham','Suksathit','Komen','Udomrat','Thewanruedi','Phanthuwet','Wimonmat','Charuwan','Pantharanont','Sakthamrong','Paisansin']
 
 # Country-specific indigenous / regional additions
 MEXICAN_M = ['Tenoch','Cuauhtémoc','Itzcóatl','Xicoténcatl']
@@ -115,6 +115,9 @@ MEXICAN_W = ['Xochitl','Itzel','Citlali','Tonantzin']
 MEXICAN_L = ['Zapata','Villa','Cárdenas','Godínez','Esparza']
 ARGENTINE_L = ['Sosa','Lucero','Pereyra','Villagra','Guzmán']
 SAUDI_L = ['al-Otaibi','al-Harbi','al-Ghamdi','al-Dossari','al-Qahtani']
+# Egyptians do not use the Saudi al- forms, and Egyptian family names are very often
+# the father's own given name, so they get their own pool.
+EGYPT_L = 'Mubarak,Shaker,Soliman,Naguib,Zaki,Fahmy,Farghaly,Attia,Badawi,Fouad,Gaber,Hegazy,Kassem,Lotfy,Mansour,Rifaa,Saad,Shafik,Sorour,Taha,Wahba,Yassin,Zeid,Elsayed,Elshazly,Elsherbiny,Elhusseiny,Elgendy,Elkholy,Elnaggar,Eltayeb,Emam,Fayad,Hamad,Kamel,Khalil,Magdy,Mahmoud,Masoud,Mounir,Nazir,Noor,Osman,Rifai,Saleh,Samir,Shalaby,Sharkawy,Younes,Tawfik'.split(',')
 
 NATIONS_NAMES = {
     'USA':       (NAMES_M_EN, NAMES_W_EN, NAMES_L_EN),
@@ -135,12 +138,12 @@ NATIONS_NAMES = {
     'Indonesia': (NAMES_M_ID, NAMES_W_ID, NAMES_L_ID),
     'Argentina': (NAMES_M_ES[2:] + NAMES_M_ES[:2], NAMES_W_ES[3:] + NAMES_W_ES[:3], NAMES_L_ES[:45] + ARGENTINE_L),
     'Nigeria':   (NAMES_M_NG, NAMES_W_NG, NAMES_L_NG),
-    'Egypt':     (NAMES_M_AR, NAMES_W_AR, NAMES_L_AR),
+    'Egypt':     (NAMES_M_AR, NAMES_W_AR, EGYPT_L),
     'Philippines': (NAMES_M_PH, NAMES_W_PH, NAMES_L_PH),
     'South Africa': (NAMES_M_ZA, NAMES_W_ZA, NAMES_L_ZA),
     'Iran':      (NAMES_M_FA, NAMES_W_FA, NAMES_L_FA),
     'Australia': (NAMES_M_EN[6:] + NAMES_M_EN[:6], NAMES_W_EN[7:] + NAMES_W_EN[:7], NAMES_L_EN[20:] + NAMES_L_EN[:20]),
-    'Saudi Arabia': (NAMES_M_AR[4:] + NAMES_M_AR[:4], NAMES_W_AR[5:] + NAMES_W_AR[:5], NAMES_L_AR[10:50] + SAUDI_L),
+    'Saudi Arabia': (NAMES_M_AR[4:] + NAMES_M_AR[:4], NAMES_W_AR[5:] + NAMES_W_AR[:5], NAMES_L_AR + SAUDI_L),
     'Turkey':    (NAMES_M_TR, NAMES_W_TR, NAMES_L_TR),
     'South Korea': (NAMES_M_KR, NAMES_W_KR, NAMES_L_KR),
     'Poland':    (NAMES_M_PL, NAMES_W_PL, NAMES_L_PL),
@@ -150,6 +153,9 @@ NATIONS_NAMES = {
 
 def generate_nation(rand: random.Random):
     return rand.choice(NATIONS)
+
+# In these cultures the family name comes first when a name is written out in full.
+FAMILY_NAME_FIRST = ('Japan', 'South Korea', 'Thailand')
 
 def generate_real_name(nation: str, gender: Literal['male', 'female'], rand: random.Random):
     names_m, names_w, names_l = NATIONS_NAMES[nation]
@@ -192,7 +198,7 @@ def generate_real_name(nation: str, gender: Literal['male', 'female'], rand: ran
             elif l_name.endswith('is') or l_name.endswith('as'):
                 l_name = l_name.removesuffix('s')
 
-    if nation == 'South Korea':
+    if nation in FAMILY_NAME_FIRST:
         return l_name + ' ' + f_name
     return f_name + ' ' + l_name
 
