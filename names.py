@@ -64,8 +64,18 @@ NAMES_M_IN = ['Arjun','Rohan','Aryan','Aditya','Vikram','Karthik','Rajesh','Sidd
 NAMES_W_IN = ['Priya','Ananya','Divya','Meera','Kavita','Sunita','Neha','Pooja','Shreya','Jyoti','Deepa','Asha','Leela','Madhuri','Sita','Tara','Anjali','Radha','Maya','Nisha']
 NAMES_L_IN = ['Patel','Sharma','Singh','Kumar','Reddy','Khan','Desai','Mehta','Rao','Choudhury','Iyer','Chatterjee','Joshi','Malhotra','Agarwal','Gupta','Varma','Nair','Menon','Das','Tiwari','Mishra','Yadav','Jain','Saxena','Bhat','Acharya','Dubey','Thakur','Kapoor','Srinivasan','Pandey','Shah','Trivedi','Oberoi','Biswas','Banerjee','Mukherjee','Sen','Gowda','Shetty','Naidu','Rajput','Dutta','Ranganathan','Pillai','Subramanian','Krishnan','Venkatesh','Raman']
 
-NAMES_M_ID = ['Agus','Asep','Budi','Dedi','Deni','Dimas','Eko','Fahrul','Fajar','Galih','Hendra','Iman','Irfan','Jaka','Jaya','Jodi','Joko','Kurniawan','Lukman','Mahendra']
-NAMES_W_ID = ['Aisyah','Anita','Ayu','Citra','Dewi','Dina','Eni','Farah','Fitri','Gita','Hana','Indah','Intan','Ismi','Jihan','Kania','Lestari','Mira','Nadia','Nia']
+NAMES_M_ID = 'Agus,Ahmad,Akbar,Andi,Arif,Bagus,Bambang,Bayu,Bimo,Budi,Cahya,Dedi,Dimas,Dwi,Eko,Fajar,Fauzi,Fikri,Galih,Guntur,Hendra,Herman,Iman,Irfan,Jaka,Joko,Kamal,Lukman,Mahendra,Muhammad,Nanda,Rahmat,Reza,Rizki,Rohman,Rudi,Sandi,Satria,Slamet,Sukma,Taufik,Tomi,Umar,Wahyu,Wawan,Yanto,Yusuf,Zaki,Zulkifli'.split(',')
+NAMES_W_ID = 'Ai,Aida,Aisyah,Amalia,Anisa,Asih,Ayu,Citra,Dewi,Dian,Dinda,Eni,Fitri,Fitria,Gita,Hesti,Indah,Intan,Kartika,Larasati,Lestari,Mira,Nadia,Nenden,Nia,Nur,Nurul,Oyong,Popon,Putri,Ratna,Rina,Risma,Salsabila,Sari,Sekar,Tika,Tuti,Wulan,Yuni,Yunita,Zahrah,Zulfa'.split(',')
+# Indonesian names are mostly mononymous: a single "callsign" is normal, but the
+# formal name (used on documents, incl. this university roster) often adds a family
+# name inherited from the father, plus an honorific such as "Dr." or "H.".
+NAMES_L_ID = 'Aditya,Anggara,Anwar,Asmara,Firmansyah,Gunawan,Handoko,Hardiman,Hidayat,Hartono,Hasibuan,Kurniawan,Lubis,Marjono,Maulana,Nugroho,Permana,Pratama,Prasetyo,Prayoga,Ramadhan,Santoso,Saputra,Setiawan,Sihombing,Simanjuntak,Siregar,Soerjanto,Susanto,Wibisono,Wibowo,Widyanto,Wicaksono,Yulianto,Yudhoyono'.split(',')
+# Only women get these -i / -y family names, men keep the inherited surname unchanged.
+NAMES_L_ID_F = 'Anggraini,Fadhilah,Handayani,Kusuma,Kusumawardani,Lestari,Maharani,Mayangsari,Ningrum,Novitasari,Oktaviani,Permatasari,Rahayu,Rahmawati,Ramadhani,Safitri,Suryani,Wulandari'.split(',')
+# Fathers named in "bin" / "binti" patronymics.
+NAMES_FATHER_ID = 'Ahmad,Andi,Arif,Bambang,Budi,Eko,Hendra,Iman,Joko,Kamal,Muhammad,Rahmat,Reza,Rizki,Sandi,Sukma,Taufik,Yusuf,Zulkifli'.split(',')
+ID_TITLES_M = ['Dr.', 'Drs.', 'Ir.', 'H.']
+ID_TITLES_W = ['Dr.', 'Drs.', 'Hj.']
 
 NAMES_M_NG = ['Adebayo','Olumide','Chinedu','Emeka','Ifeanyi','Tunde','Kayode','Segun','Uche','Kelechi','Ibrahim','Sani','Musa','Abdullahi','Bassey','Jide','Kunle','Nnamdi','Femi','Biodun']
 NAMES_W_NG = ['Adebimpe','Yetunde','Titilayo','Bukola','Sade','Ngozi','Chioma','Adaeze','Amaka','Ifunanya','Hauwa','Zainab','Aisha','Maryam','Fatima','Oluwaseun','Temiloluwa','Olamide','Tobi','Eno']
@@ -122,7 +132,7 @@ NATIONS_NAMES = {
     'Japan':     (NAMES_M_JA, NAMES_W_JA, NAMES_L_JA),
     'Mexico':    (NAMES_M_ES[:16] + MEXICAN_M, NAMES_W_ES[:16] + MEXICAN_W, NAMES_L_ES[:45] + MEXICAN_L),
     'Brazil':    (NAMES_M_PT, NAMES_W_PT, NAMES_L_PT),
-    'Indonesia': (NAMES_M_ID, NAMES_W_ID, []),
+    'Indonesia': (NAMES_M_ID, NAMES_W_ID, NAMES_L_ID),
     'Argentina': (NAMES_M_ES[2:] + NAMES_M_ES[:2], NAMES_W_ES[3:] + NAMES_W_ES[:3], NAMES_L_ES[:45] + ARGENTINE_L),
     'Nigeria':   (NAMES_M_NG, NAMES_W_NG, NAMES_L_NG),
     'Egypt':     (NAMES_M_AR, NAMES_W_AR, NAMES_L_AR),
@@ -144,8 +154,20 @@ def generate_nation(rand: random.Random):
 def generate_real_name(nation: str, gender: Literal['male', 'female'], rand: random.Random):
     names_m, names_w, names_l = NATIONS_NAMES[nation]
     if nation == 'Indonesia':
-        n_names = rand.randint(1, 3)
-        return ' '.join(rand.sample(names_m if gender == 'male' else names_w, k=n_names))
+        pool = names_m if gender == 'male' else names_w
+        given = rand.choice(pool)
+        extra = rand.random()
+        if extra < 0.08:
+            # Malay / Minangkabau patronymic: "Sukma bin Rahmat", "Siti binti Agus"
+            given += f' {"bin" if gender == "male" else "binti"} {rand.choice(NAMES_FATHER_ID)}'
+        elif extra < 0.58:
+            given += ' ' + rand.choice(names_l + ([] if gender == 'male' else NAMES_L_ID_F))
+        elif extra < 0.78:
+            # two given names, the callsign first: "Dewi Ayu", "Agus Iman"
+            given += ' ' + rand.choice([n for n in pool if n != given])
+        if rand.random() < 0.05:
+            given = f'{rand.choice(ID_TITLES_M if gender == "male" else ID_TITLES_W)} {given}'
+        return given
     elif nation == 'China':
         l_name = rand.choice(names_l)
         n_givenname = rand.randint(1, 2)
