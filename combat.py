@@ -5,7 +5,7 @@ from typing import List
 
 from colorama import Fore, Style
 
-from constants import ENEMY_BUFFS, POWER_CLASSES, POWER_COLORS, TEAM_BUFFS
+from constants import ENEMY_BUFFS, POWER_CLASSES, POWER_COLORS, TEAM_BUFFS, ENABLE_BATTLE_PREDICTIONS
 from models import Mission, Student
 
 def _apply_team_buffs(heroes: List[Student]):
@@ -84,14 +84,14 @@ def _heal_decision(hero: Student, mission: Mission, heroes: List[Student]):
     # Returns (should_heal, target) or (False, None).
     if hero.mp <= 0 or hero.power in mission.villain.immunities:
         return False, None
-    injured = [h for h in heroes if h.hp > 0 and h.hp < h.max_hp]
+    injured = [h for h in heroes if h.hp > 0 and h.hp < h.max_hp - hero.pwr * 3 // 4]
     if not injured:
         return False, None
     only_villain_left = not [m for m in mission.villain.minions if m.hp > 0]
-    anyone_critical = any(h.hp < h.max_hp / 2 for h in heroes if h.hp > 0)
+    anyone_critical = any(h.hp < h.max_hp // 2 for h in heroes if h.hp > 0)
     if not (only_villain_left or anyone_critical):
         return False, None
-    critical = [h for h in injured if h.hp < h.max_hp / 2]
+    critical = [h for h in injured if h.hp < h.max_hp // 2]
     if critical:
         target = min(critical, key=lambda h: h.hp)
     else:
@@ -125,9 +125,8 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
             print(f"{h.superhero_name}: HP {h.max_hp}, MP {h.max_mp}, DMG {h.dmg}, PWR {h.pwr}, DEF {h.defense:.2f}, AGL {h.agl:.2f}")
         print('--- VERSUS ---')
         print(f"{mission.villain.name}: HP {mission.villain.max_hp}")
-        for mn in mission.villain.minions:
-            if mn.hp > 0:
-                print(f"Minion: HP {mn.max_hp}")
+        if len(mission.villain.minions) > 0:
+            print(f"{len(mission.villain.minions)} minions: HP {mission.villain.minions[0].max_hp}")
         print('--- FIGHT! ---')
 
     turn = 0
@@ -198,7 +197,7 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
                         print(f"{hero_name} punches {t_name} for {hero.dmg} damage! Remaining HP: {target.hp}")
 
             else:  # Splash
-                use_super = hero.mp > 0 and hero.power not in mission.villain.immunities
+                use_super = hero.mp > 0 and hero.power not in mission.villain.immunities and (len(alive_villains) > 1 or hero.pwr > hero.dmg)
                 if use_super:
                     targets = [v for v in villains if v.hp > 0]
                     for target in targets:
@@ -297,15 +296,18 @@ def monte_carlo_predict(mission: Mission, heroes: List[Student], rand, monte_car
 def format_prediction(chance: float, n_assigned: int) -> str:
     assigned_str = '1 hero' if n_assigned == 1 else f'{n_assigned} heroes'
 
-    if chance < 0.1:
-        return f'{Style.DIM}{Fore.RED}[{assigned_str}|{round(chance * 100)}% SUICIDAL]{Style.RESET_ALL}'
-    elif chance < 0.25:
-        return f'{Fore.RED}[{assigned_str}|{round(chance * 100)}% HOPELESS]{Style.RESET_ALL}'
-    elif chance < 0.5:
-        return f'{Style.DIM}{Fore.YELLOW}[{assigned_str}|{round(chance * 100)}% RISKY]{Style.RESET_ALL}'
-    elif chance < 0.75:
-        return f'{Style.DIM}{Fore.LIGHTYELLOW_EX}[{assigned_str}|{round(chance * 100)}% DECENT]{Style.RESET_ALL}'
-    elif chance < 0.9:
-        return f'{Fore.LIGHTYELLOW_EX}[{assigned_str}|{round(chance * 100)}% GOOD]{Style.RESET_ALL}'
+    if ENABLE_BATTLE_PREDICTIONS:
+        if chance < 0.1:
+            return f'{Style.DIM}{Fore.RED}[{assigned_str}|{round(chance * 100)}% SUICIDAL]{Style.RESET_ALL}'
+        elif chance < 0.25:
+            return f'{Fore.RED}[{assigned_str}|{round(chance * 100)}% HOPELESS]{Style.RESET_ALL}'
+        elif chance < 0.5:
+            return f'{Style.DIM}{Fore.YELLOW}[{assigned_str}|{round(chance * 100)}% RISKY]{Style.RESET_ALL}'
+        elif chance < 0.75:
+            return f'{Style.DIM}{Fore.LIGHTYELLOW_EX}[{assigned_str}|{round(chance * 100)}% DECENT]{Style.RESET_ALL}'
+        elif chance < 0.9:
+            return f'{Fore.LIGHTYELLOW_EX}[{assigned_str}|{round(chance * 100)}% GOOD]{Style.RESET_ALL}'
+        else:
+            return f'{Fore.LIGHTGREEN_EX}[{assigned_str}|{round(chance * 100)}% CERTAIN]{Style.RESET_ALL}'
     else:
-        return f'{Fore.LIGHTGREEN_EX}[{assigned_str}|{round(chance * 100)}% CERTAIN]{Style.RESET_ALL}'
+        return f'{Style.DIM}[{assigned_str}]{Style.RESET_ALL}'

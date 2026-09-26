@@ -8,9 +8,9 @@ from colorama import Fore, Style
 
 from combat import format_prediction, monte_carlo_predict, run_mission
 from constants import (
-    COURSE_BASE_COST,
-    COURSE_COST_INCREASE,
     COURSE_STATS,
+    ENABLE_BATTLE_PREDICTIONS,
+    MAX_COURSES_PER_STAT,
     MAX_MISSION_FAILS,
     MAX_STUDENTS,
     POWER_COLORS,
@@ -25,7 +25,10 @@ from models import Student
 from storage import load_state, save_state
 from utils import (
     accept_candidate,
+    can_take_course,
     clear_screen,
+    course_cost,
+    course_price_for,
     display_candidate,
     display_missions,
     display_student,
@@ -66,7 +69,7 @@ def main():
 [ MONTHLY CYCLE ]
 Each turn is ONE MONTH. Use your budget to prepare:
  - RECRUIT (,): Every turn 3 student candidates are generated. Review their stats and superpowers and enroll the ones you like (from $85, +$5 per faculty). The dormitory holds at most {MAX_STUDENTS} students; you can graduate a student to free up space.
- - TRAIN (.): Buy courses to boost stats (each buy costs $10, +$10 each time). Six stat courses: (+HP), (+MP), (+DMG), (+PWR), (+DEF), (+AGL). Course names change every turn!
+  - TRAIN (.): Buy courses to boost stats (each buy costs $10, +$10 each time, at most {MAX_COURSES_PER_STAT} courses of each kind per student). Six stat courses: (+HP), (+MP), (+DMG), (+PWR), (+DEF), (+AGL). Course names change every turn!
 
 [ SUPERPOWERS ]
 Powers belong to three classes:
@@ -168,7 +171,7 @@ money to recruit new ones. Villains grow stronger every month!
                     if len(assignments) == len(students):
                         current_action = 'proceed'
                     else:
-                        if input(f'\n{Style.BRIGHT}{Fore.RED}Not all students have been assigned. Are you sure you want to proceed? (y/N) ').strip().lower() == 'y':
+                        if input(f'\n{Style.BRIGHT}{Fore.RED}Not all students have been assigned. Are you sure you want to proceed? (y/N) {Style.RESET_ALL}').strip().lower() == 'y':
                             current_action = 'proceed'
                 elif cmd == ";":
                     if not isinstance(last_managed_student, Student):
@@ -250,16 +253,22 @@ money to recruit new ones. Villains grow stronger every month!
 
                 course_letters = ['1', '2', '3', '4', '5', '6']
                 course_costs = []
+                course_available = []
                 print("Courses:")
                 for i, stat in enumerate(COURSE_STATS):
                     if s == 'all':
                         name = f'{stat} course'
-                        cost = sum([COURSE_BASE_COST + COURSE_COST_INCREASE * s1.courses_taken[stat] for s1 in students])
+                        cost = course_price_for(students, stat)
+                        available = any([can_take_course(s1, stat) for s1 in students])
                     else:
                         name = get_course_name(course_names, stat, s.power)
-                        cost = COURSE_BASE_COST + COURSE_COST_INCREASE * s.courses_taken[stat]
+                        cost = course_cost(s, stat)
+                        available = can_take_course(s, stat)
+                    if not available:
+                        name = f'{Style.DIM}{Fore.LIGHTBLACK_EX}{name}{Style.RESET_ALL}'
                     print(f"[{course_letters[i]}] {name} (+{stat}): ${cost}")
                     course_costs.append(cost)
+                    course_available.append(available)
 
                 if s == 'all':
                     print('Press the corresponding key to buy a course for all students.')
@@ -273,12 +282,19 @@ money to recruit new ones. Villains grow stronger every month!
                     stat = COURSE_STATS[course_letters.index(cmd)]
                     cost = course_costs[course_letters.index(cmd)]
 
-                    if money < cost:
+                    if not course_available[course_letters.index(cmd)]:
+                        if s == 'all':
+                            reason = f'No student can take more {stat} courses ({MAX_COURSES_PER_STAT} is the limit).'
+                        else:
+                            reason = f'{s.superhero_name} already took the maximum of {stat} courses ({MAX_COURSES_PER_STAT}).'
+                        print(f"{cmd}\n{Style.BRIGHT}{Fore.RED}{reason}{Style.RESET_ALL}")
+                        time.sleep(1)
+                    elif money < cost:
                         print(f"{cmd}\n{Style.BRIGHT}{Fore.RED}Not enough money!{Style.RESET_ALL}")
                         time.sleep(1)
                     else:
                         if s == 'all':
-                            for s1 in students:
+                            for s1 in [s1 for s1 in students if can_take_course(s1, stat)]:
                                 take_course(s1, stat)
                         else:
                             take_course(s, stat)
@@ -318,7 +334,8 @@ money to recruit new ones. Villains grow stronger every month!
                 else:
                     m = missions[m_idx]
                     assignments[s.uni_id] = m
-                    predictions[m_idx] = monte_carlo_predict(m, [s for s in students if assignments.get(s.uni_id) == m], rand)
+                    if ENABLE_BATTLE_PREDICTIONS:
+                        predictions[m_idx] = monte_carlo_predict(m, [s for s in students if assignments.get(s.uni_id) == m], rand)
                     current_action = 'idle'
             elif current_action == 'proceed':
                 # everyone is assigned, resolving missions
@@ -363,8 +380,9 @@ money to recruit new ones. Villains grow stronger every month!
                 break
 
             # recalculate predictions
-            for i, m in enumerate(missions):
-                predictions[i] = monte_carlo_predict(m, [s for s in students if assignments.get(s.uni_id) == m], rand)
+            if ENABLE_BATTLE_PREDICTIONS:
+                for i, m in enumerate(missions):
+                    predictions[i] = monte_carlo_predict(m, [s for s in students if assignments.get(s.uni_id) == m], rand)
 
         if total_failed_missions >= MAX_MISSION_FAILS:
             print(f"\nGame Over! You failed {MAX_MISSION_FAILS} missions.")

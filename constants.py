@@ -13,14 +13,15 @@ TOTAL_TURNS = (END_YEAR - START_YEAR) * 12
 INITIAL_MONEY = 100
 INITIAL_STUDENTS = 3
 INITIAL_MISSIONS = 3                  # missions are always 3 now
-MAX_STUDENTS = 12                     # dormitory capacity
-MAX_MISSION_FAILS = 20
+MAX_STUDENTS = 15                     # dormitory capacity
+MAX_MISSION_FAILS = 5
 
 STUDENT_BASE_COST = 25
 STUDENT_COST_INCREASE = 25
 
 COURSE_BASE_COST = 10
 COURSE_COST_INCREASE = 10             # courses grow by $10 with each buy
+MAX_COURSES_PER_STAT = 10             # a student cannot buy more than this many courses of the same kind
 
 # Six stat courses (variable display names).
 COURSE_STATS = ['HP', 'MP', 'DMG', 'PWR', 'DEF', 'AGL']
@@ -50,9 +51,9 @@ POWER_CLASSES = {
 # Unique two-letter codes used to display powers in the immunities list.
 POWER_CODES = {
     "Strength": "St", "Flight": "Fl", "Speed": "Sp", "Fire": "Fi",
-    "Slash": "Sl", "Electric": "El", "Laser": "La", "Tech": "Te",
+    "Slash": "Sl", "Electric": "Ec", "Laser": "La", "Tech": "Te",
     "Solar": "So", "Weather": "We", "Nature": "Na", "Shield": "Sh",
-    "Elastic": "Ec", "Energy": "En", "Water": "Wa", "Ice": "Ic",
+    "Elastic": "El", "Energy": "En", "Water": "Wa", "Ice": "Ic",
     "Acid": "Ac", "Mind": "Mi", "Gravity": "Gr", "Time": "Ti",
     "Cyber": "Cy", "Sonic": "Sn",
 }
@@ -61,7 +62,7 @@ CODE_TO_POWER = {code: power for power, code in POWER_CODES.items()}
 POWER_COLORS = {
     "Strength": Fore.LIGHTMAGENTA_EX,
     "Speed": Fore.LIGHTGREEN_EX,
-    "Flight": Fore.LIGHTCYAN_EX,
+    "Flight": Fore.CYAN,
     "Fire": Fore.LIGHTRED_EX,
     "Slash": Fore.RED,
     "Electric": Fore.LIGHTYELLOW_EX,
@@ -74,7 +75,7 @@ POWER_COLORS = {
     "Elastic": Fore.LIGHTMAGENTA_EX,
     "Energy": Fore.LIGHTYELLOW_EX,
     "Water": Fore.LIGHTBLUE_EX,
-    "Ice": Fore.BLUE,
+    "Ice": Fore.LIGHTCYAN_EX,
     "Acid": Fore.LIGHTGREEN_EX,
     "Mind": Fore.LIGHTRED_EX,
     "Gravity": Fore.LIGHTBLACK_EX,
@@ -84,11 +85,11 @@ POWER_COLORS = {
 }
 
 # Power class defaults for PWR.
-PWR_BASE = {"Attack": 20, "Heal": 10, "Splash": 5}
+PWR_BASE = {"Attack": 20, "Heal": 20, "Splash": 10}
 PWR_GROWTH_DEFAULT = {"Attack": 20, "Heal": 10, "Splash": 5}
 
 # Default per-course stat growth (PWR depends on class, handled separately).
-COURSE_GROWTH_DEFAULT = {"HP": 50, "MP": 1, "DMG": 4, "DEF": 0.25, "AGL": 0.25}
+COURSE_GROWTH_DEFAULT = {"HP": 50, "MP": 2, "DMG": 4, "DEF": 0.25, "AGL": 0.25}
 
 # Per-power overrides for per-course growth.
 POWER_GROWTHS = {
@@ -125,5 +126,9 @@ ENEMY_BUFFS = {
 }
 
 SHOW_BATTLE_PROGRESS = True
+
+# Monte-Carlo battle outcome prediction is expensive: when False it is neither
+# calculated nor displayed anywhere in the game.
+ENABLE_BATTLE_PREDICTIONS = False
 
 SAVE_FILE_NAME = 'superhero_university_state.txt'

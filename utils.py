@@ -9,9 +9,13 @@ from colorama import Fore, Style
 
 from combat import format_prediction
 from constants import (
+    COURSE_BASE_COST,
+    COURSE_COST_INCREASE,
     COURSE_GROWTH_DEFAULT,
     COURSE_STATS,
+    ENABLE_BATTLE_PREDICTIONS,
     INITIAL_MISSIONS,
+    MAX_COURSES_PER_STAT,
     POWER_CLASSES,
     POWER_CODES,
     POWER_COLORS,
@@ -68,9 +72,9 @@ def generate_stats(gender, power, rand):
         hp = 50 + 10 * rand.randint(0, 15)
     else:
         hp = 150 + 10 * rand.randint(0, 15)
-    mp = 0
+    mp = rand.randint(0, 3)
     dmg = rand.randint(8, 24) if gender == 'male' else rand.randint(1, 10)
-    pwr = PWR_BASE[POWER_CLASSES[power]]
+    pwr = rand.randint(1, PWR_BASE[POWER_CLASSES[power]] // 5) * 5
     defense = rand.random() / 2 + 1
     agl = rand.random() / 2 + 1
     return hp, mp, dmg, pwr, defense, agl
@@ -128,7 +132,21 @@ def course_growth(power, stat):
             'PWR', PWR_GROWTH_DEFAULT[POWER_CLASSES[power]])
     return POWER_GROWTHS.get(power, {}).get(stat, COURSE_GROWTH_DEFAULT[stat])
 
+def can_take_course(student, stat):
+    """True if the student still has room for one more course of this kind."""
+    return student.courses_taken[stat] < MAX_COURSES_PER_STAT
+
+def course_cost(student, stat):
+    """Price of the next course of this kind for this student."""
+    return COURSE_BASE_COST + COURSE_COST_INCREASE * student.courses_taken[stat]
+
+def course_price_for(students, stat):
+    """Total price of buying this course for every student who can still take it."""
+    return sum([course_cost(s, stat) for s in students if can_take_course(s, stat)])
+
 def take_course(student, stat):
+    if not can_take_course(student, stat):
+        return False
     growth = course_growth(student.power, stat)
     if stat == 'HP':
         student.hp += growth
@@ -145,6 +163,7 @@ def take_course(student, stat):
     elif stat == 'AGL':
         student.agl += growth
     student.courses_taken[stat] += 1
+    return True
 
 def generate_course_names(rand):
     """Return (defaults, overrides) mapping course stats to display names."""
@@ -209,15 +228,15 @@ def display_missions(missions, assignments, predictions):
 # ==========================================
 # MISSIONS
 # ==========================================
-MAX_MINIONS = 16
+MAX_MINIONS = 10
 def generate_missions(month, rand):
     missions = []
 
     months_passed = month
-    max_hp = 50 + 10 * (months_passed ** 2)
-    max_mdmg = 5 + 5 * months_passed
-    max_rdmg = 5 + 5 * months_passed
-    max_nm = months_passed // 2            # allowed to grow beyond 10
+    max_hp = 50 + 25 * months_passed
+    max_mdmg = 5 + 4 * months_passed
+    max_rdmg = 5 + 4 * months_passed
+    max_nm = months_passed // 3
     max_k = months_passed // 4
 
     for _ in range(INITIAL_MISSIONS):
@@ -242,7 +261,7 @@ def generate_missions(month, rand):
         villain = Villain(v_name, vehicle_name, v_hp, v_mdmg, v_rdmg, nm, immunities, m_hp, m_mdmg, m_rdmg)
 
         total_hp = v_hp + m_hp * nm
-        prize = rand.randint(round(v_hp / 3), round(total_hp * 0.75))
+        prize = rand.randint(round(v_hp / 3), round(v_hp * 2))
 
         missions.append(Mission(country, city, villain, prize))
 

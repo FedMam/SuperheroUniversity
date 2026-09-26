@@ -37,8 +37,8 @@ class Student:
         return clone
 
 class Minion:
-    def __init__(self, hp, mdmg, rdmg, immunities):
-        self.name = "Minion"
+    def __init__(self, hp, mdmg, rdmg, immunities, index):
+        self.name = f"Minion {index}"
         self.hp = hp
         self.max_hp = hp
         self.mdmg = mdmg
@@ -59,8 +59,8 @@ class Villain:
         self.m_hp = m_hp
         self.m_mdmg = m_mdmg
         self.m_rdmg = m_rdmg
-        for _ in range(nm):
-            self.minions.append(Minion(m_hp, m_mdmg, m_rdmg, immunities))
+        for index in range(nm):
+            self.minions.append(Minion(m_hp, m_mdmg, m_rdmg, immunities, index + 1))
 
     def clone(self):
         return Villain(self.name, self.vehicle_name, self.hp, self.mdmg,
