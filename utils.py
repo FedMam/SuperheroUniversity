@@ -209,11 +209,12 @@ def display_missions(missions, assignments, predictions):
 # ==========================================
 # MISSIONS
 # ==========================================
+MAX_MINIONS = 16
 def generate_missions(month, rand):
     missions = []
 
     months_passed = month
-    max_hp = 100 + 100 * months_passed
+    max_hp = 50 + 10 * (months_passed ** 2)
     max_mdmg = 5 + 5 * months_passed
     max_rdmg = 5 + 5 * months_passed
     max_nm = months_passed // 2            # allowed to grow beyond 10
@@ -226,7 +227,7 @@ def generate_missions(month, rand):
         v_hp = rand.randint(10, max_hp)
         v_mdmg = rand.randint(1, max_mdmg)
         v_rdmg = rand.randint(1, max_rdmg)
-        nm = min(10, rand.randint(0, max_nm))
+        nm = min(MAX_MINIONS, rand.randint(0, max_nm))
 
         k = min(len(SUPERPOWERS) - 1, rand.randint(0, max_k))
         immunities = [SUPERPOWERS[p_i] for p_i in sorted(rand.sample(list(range(len(SUPERPOWERS))), k))]

@@ -9,13 +9,13 @@ from constants import ENEMY_BUFFS, POWER_CLASSES, POWER_COLORS, TEAM_BUFFS
 from models import Mission, Student
 
 def _apply_team_buffs(heroes: List[Student]):
-    for hero in heroes:
-        power = hero.power
+    for teammate in heroes:
+        power = teammate.power
         if power not in TEAM_BUFFS:
             continue
         stat, factor = TEAM_BUFFS[power]
         
-        for teammate in heroes:
+        for hero in heroes:
             if stat == 'hp' or stat == 'all':
                 hero.hp = math.floor(hero.hp * (1 + factor))
                 hero.max_hp = math.floor(hero.max_hp * (1 + factor))
@@ -32,13 +32,14 @@ def _apply_team_buffs(heroes: List[Student]):
                 hero.agl *= (1 + factor)
 
 def _apply_enemy_buffs(villains, heroes: List[Student]):
-    for v in villains:
-        for h in heroes:
-            if h.power not in ENEMY_BUFFS:
-                continue
-            
-            stat, factor = ENEMY_BUFFS[h.power]
-            
+    for h in heroes:
+        if h.power not in ENEMY_BUFFS:
+            continue
+        
+        stat, factor = ENEMY_BUFFS[h.power]
+        
+        
+        for v in villains:
             if stat == 'hp' or stat == 'all':
                 v.hp = math.floor(v.hp * (1 - factor))
                 v.max_hp = math.floor(v.max_hp * (1 - factor))

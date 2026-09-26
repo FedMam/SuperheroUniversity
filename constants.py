@@ -98,7 +98,7 @@ POWER_GROWTHS = {
     "Fire": {"PWR": 8},
     "Slash": {"DMG": 6},
     "Laser": {"PWR": 30},
-    "Tech": {"HP": 60, "DEF": 0.3},
+    "Tech": {"HP": 60, "DEF": 0.4},
     "Solar": {"PWR": 50, "HP": 20},
     "Nature": {"HP": 75},
     "Shield": {"DEF": 0.5},
