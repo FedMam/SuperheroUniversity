@@ -233,9 +233,9 @@ def generate_missions(month, rand):
     missions = []
 
     months_passed = month
-    max_hp = 50 + 25 * months_passed
-    max_mdmg = 5 + 4 * months_passed
-    max_rdmg = 5 + 4 * months_passed
+    max_hp = 50 + 50 * months_passed
+    max_mdmg = 4 + 4 * months_passed
+    max_rdmg = 4 + 4 * months_passed
     max_nm = months_passed // 3
     max_k = months_passed // 4
 
@@ -243,9 +243,9 @@ def generate_missions(month, rand):
         country, city = generate_country_and_city(rand)
         v_name, vehicle_name = generate_supervillain_name(rand)
 
-        v_hp = rand.randint(10, max_hp)
-        v_mdmg = rand.randint(1, max_mdmg)
-        v_rdmg = rand.randint(1, max_rdmg)
+        v_hp = rand.randint(max_hp // 5, max_hp)
+        v_mdmg = rand.randint(max_mdmg // 4, max_mdmg)
+        v_rdmg = rand.randint(max_rdmg // 4, max_rdmg)
         nm = min(MAX_MINIONS, rand.randint(0, max_nm))
 
         k = min(len(SUPERPOWERS) - 1, rand.randint(0, max_k))
