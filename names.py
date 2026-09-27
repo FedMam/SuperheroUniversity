@@ -18,7 +18,7 @@ NATIONS = [
 
 NAMES_M_EN = ['James','William','Thomas','George','Edward','Henry','Charles','Frederick','Arthur','Albert','Alfred','Harry','Jack','Oliver','Samuel','Benjamin','Joseph','Daniel','Matthew','David']
 NAMES_W_EN = ['Elizabeth','Mary','Margaret','Emma','Alice','Sarah','Florence','Rose','Catherine','Emily','Charlotte','Anne','Victoria','Beatrice','Eleanor','Grace','Lily','Clara','Jane','Sophia']
-NAMES_L_EN = ['Smith','Jones','Taylor','Brown','Williams','Wilson','Johnson','Davies','Robinson','Wright','Thompson','Evans','Walker','White','Roberts','Green','Hall','Wood','Jackson','Clarke','Harrison','Lewis','Morris','King','Allen','Scott','Young','Gordon','Douglas',"O'Brien","O'Connor",'James','Knight','Ward','Hughes','Morgan','Edwards','Hill','Moore','Clark','Carter','Mitchell','Phillips','Patel','Adams','Campbell','Anderson','Bell','Kelly','Baker','Davis','Bennett','Cook','McCarthy','McDonald','McKenzie']
+NAMES_L_EN = ['Smith','Jones','Taylor','Brown','Williams','Wilson','Johnson','Davis','Robinson','Wright','Thompson','Evans','Walker','White','Roberts','Green','Hall','Wood','Jackson','Clarke','Harrison','Lewis','Morris','King','Allen','Scott','Young','Graham','Gordon','Douglas',"O'Brien","O'Connor",'James','Knight','Ward','Hughes','Morgan','Edwards','Hill','Moore','Clark','Carter','Mitchell','Phillips','Patel','Adams','Campbell','Anderson','Bell','Kelly','Baker','Davis','Bennett','Cook','McCarthy','McDonald','McKenzie','Miller','Turner']
 
 NAMES_M_RU = ['Alexander','Dmitry','Mikhail','Ivan','Sergei','Andrei','Alexei','Nikolai','Vladimir','Artem','Maxim','Oleg','Yuri','Pavel','Konstantin','Anton','Denis','Igor','Roman','Vasily','Marat','Ruslan']
 NAMES_W_RU = ['Anastasia','Maria','Ekaterina','Anna','Olga','Natalia','Svetlana','Irina','Yulia','Daria','Polina','Elena','Tatiana','Marina','Vera','Ludmila','Sofia','Valentina','Galina','Kristina','Kamilla','Renata']
@@ -121,7 +121,7 @@ EGYPT_L = 'Mubarak,Shaker,Soliman,Naguib,Zaki,Fahmy,Farghaly,Attia,Badawi,Fouad,
 
 NATIONS_NAMES = {
     'USA':       (NAMES_M_EN, NAMES_W_EN, NAMES_L_EN),
-    'UK':        (NAMES_M_EN[3:] + NAMES_M_EN[:3], NAMES_W_EN[4:] + NAMES_W_EN[:4], NAMES_L_EN[12:] + NAMES_L_EN[:12]),
+    'UK':        (NAMES_M_EN, NAMES_W_EN, NAMES_L_EN),
     'China':     (NAMES_M_ZH, NAMES_W_ZH, NAMES_L_ZH),
     'Russia':    (NAMES_M_RU, NAMES_W_RU, NAMES_L_RU),
     'India':     (NAMES_M_IN, NAMES_W_IN, NAMES_L_IN),
@@ -136,14 +136,14 @@ NATIONS_NAMES = {
     'Mexico':    (NAMES_M_ES[:16] + MEXICAN_M, NAMES_W_ES[:16] + MEXICAN_W, NAMES_L_ES[:45] + MEXICAN_L),
     'Brazil':    (NAMES_M_PT, NAMES_W_PT, NAMES_L_PT),
     'Indonesia': (NAMES_M_ID, NAMES_W_ID, NAMES_L_ID),
-    'Argentina': (NAMES_M_ES[2:] + NAMES_M_ES[:2], NAMES_W_ES[3:] + NAMES_W_ES[:3], NAMES_L_ES[:45] + ARGENTINE_L),
+    'Argentina': (NAMES_M_ES, NAMES_W_ES, NAMES_L_ES[:45] + ARGENTINE_L),
     'Nigeria':   (NAMES_M_NG, NAMES_W_NG, NAMES_L_NG),
     'Egypt':     (NAMES_M_AR, NAMES_W_AR, EGYPT_L),
     'Philippines': (NAMES_M_PH, NAMES_W_PH, NAMES_L_PH),
     'South Africa': (NAMES_M_ZA, NAMES_W_ZA, NAMES_L_ZA),
     'Iran':      (NAMES_M_FA, NAMES_W_FA, NAMES_L_FA),
-    'Australia': (NAMES_M_EN[6:] + NAMES_M_EN[:6], NAMES_W_EN[7:] + NAMES_W_EN[:7], NAMES_L_EN[20:] + NAMES_L_EN[:20]),
-    'Saudi Arabia': (NAMES_M_AR[4:] + NAMES_M_AR[:4], NAMES_W_AR[5:] + NAMES_W_AR[:5], NAMES_L_AR + SAUDI_L),
+    'Australia': (NAMES_M_EN, NAMES_W_EN, NAMES_L_EN),
+    'Saudi Arabia': (NAMES_M_AR, NAMES_W_AR, NAMES_L_AR + SAUDI_L),
     'Turkey':    (NAMES_M_TR, NAMES_W_TR, NAMES_L_TR),
     'South Korea': (NAMES_M_KR, NAMES_W_KR, NAMES_L_KR),
     'Poland':    (NAMES_M_PL, NAMES_W_PL, NAMES_L_PL),
@@ -155,7 +155,7 @@ def generate_nation(rand: random.Random):
     return rand.choice(NATIONS)
 
 # In these cultures the family name comes first when a name is written out in full.
-FAMILY_NAME_FIRST = ('Japan', 'South Korea', 'Thailand')
+FAMILY_NAME_FIRST = ('South Korea',)
 
 def generate_real_name(nation: str, gender: Literal['male', 'female'], rand: random.Random):
     names_m, names_w, names_l = NATIONS_NAMES[nation]
@@ -171,8 +171,8 @@ def generate_real_name(nation: str, gender: Literal['male', 'female'], rand: ran
         elif extra < 0.78:
             # two given names, the callsign first: "Dewi Ayu", "Agus Iman"
             given += ' ' + rand.choice([n for n in pool if n != given])
-        if rand.random() < 0.05:
-            given = f'{rand.choice(ID_TITLES_M if gender == "male" else ID_TITLES_W)} {given}'
+        # if rand.random() < 0.05:
+        #     given = f'{rand.choice(ID_TITLES_M if gender == "male" else ID_TITLES_W)} {given}'
         return given
     elif nation == 'China':
         l_name = rand.choice(names_l)
@@ -240,7 +240,7 @@ def generate_supervillain_name(rand: random.Random):
 # ==========================================
 NICKNAMES_STRENGTH = 'Muscle,Powerhouse,Strongman,Brawn,Brute,Titan,Goliath,Colossus,Behemoth,Leviathan,Monolith,Boulder,Crag,Anvil,Forge,Hammer,Maul,Bull,Ox,Mastiff,Bulldog,Greatdane,Gorilla,Silverback,Orangutan,Chimpanzee,Elephant,Mammoth,Mastodon,Rhinoceros,Rhino,Hippo,Bison,Buffalo,Moose,Elk,Wapiti,Stallion,Draft,Bear,Grizzly,Kodiak,Wolverine,Dinosaur,Tyrannosaurus,Triceratops,Stegosaurus,Diplodocus,Argentinosaurus,Titanosaurus'.split(',')
 NICKNAMES_SPEED = 'Dash,Rush,Blitz,Haste,Speed,Swift,Quick,Fleet,Speedy,Velocity,Turbo,Nitro,Sprint,Dart,Flash,Zip,Zoom,Bolt,Blink,Charge,Courier,Messenger,Cheetah,Gazelle,Antelope,Springbok,Impala,Jackrabbit,Hare,Pronghorn,Whippet,Greyhound,Saluki,Ostrich,Emu,Swift,Swallow,Peregrine,Marlin,Sailfish,Tuna,Swordfish,Wahoo,Barracuda,Mako,Shortfin,Roadrunner,Dragonfly,Spinetail,Dashhound,Scout'.split(',')
-NICKNAMES_FLIGHT = 'Wind,Breeze,Gust,Zephyr,Monsoon,Storm,Tempest,Nimbus,Vortex,Cyclone,Tornado,Fog,Mist,Cloud,Whirlwind,Sky,Soar,Glide,Hover,Drift,Ascend,Wing,Albatross,Eagle,Falcon,Hawk,Osprey,Kestrel,Buzzard,Goshawk,Harrier,Kite,Vulture,Condor,Heron,Crane,Stork,Pelican,Cormorant,Gannet,Frigate,Tern,Swan,Goose,Swallow,Swift,Nightjar,Swiftlet,Seagull,Raven,Magpie'.split(',')
+NICKNAMES_FLIGHT = 'Wind,Breeze,Gust,Zephyr,Monsoon,Storm,Tempest,Nimbus,Vortex,Cyclone,Tornado,Fog,Mist,Cloud,Whirlwind,Sky,Soar,Glide,Hover,Drift,Ascend,Wing,Feather,Albatross,Eagle,Falcon,Hawk,Osprey,Kestrel,Buzzard,Goshawk,Harrier,Kite,Vulture,Condor,Heron,Crane,Stork,Pelican,Cormorant,Gannet,Frigate,Tern,Swan,Goose,Swallow,Swift,Nightjar,Swiftlet,Seagull,Raven,Magpie'.split(',')
 NICKNAMES_FIRE = 'Volcano,Ember,Flame,Blaze,Spark,Cinder,Ash,Soot,Torch,Heat,Magma,Lava,Crater,Plume,Fissure,Eruption,Glow,Char,Pyroclast,Obsidian,Basalt,Kiln,Wildfire,Panther,Lion,Tiger,Jaguar,Leopard,Cheetah,Ocelot,Serval,Lynx,Bobcat,Cougar,Meerkat,Fennec,Caracal,Okapi,Orca,Python,Cobra,Viper,Mamba,Gecko,Iguana,Chameleon,Tortoise,Camel,Wildebeest,Scorpion,Wasp,Firefly,Macaw,Monitor'.split(',')
 NICKNAMES_SLASH = 'Warrior,Gladiator,Samurai,Paladin,Chevalier,Musketeer,Swordsman,Blade,Edge,Cleaver,Saber,Katana,Scimitar,Scythe,Reaper,Glaive,Pike,Lance,Spear,Trident,Halberd,Bardiche,Polearm,Rapier,Falchion,Khopesh,Claymore,Broadsword,Longsword,Shotel,Wakizashi,Kris,Flail,Mace,Axe,Tomahawk,Warhammer,Chakram,Shuriken,Kukri,Machete,Bolo,Espada,Cutlass,Sickle,Dagger,Poniard,Stiletto,Champion,Vanguard,Juggernaut,Berserker'.split(',')
 NICKNAMES_ELECTRIC = 'Volt,Watt,Ampere,Ohm,Current,Charge,Spark,Flash,Circuit,Wire,Coil,Electron,Proton,Ion,Plasma,Static,Zap,Tesla,Dynamo,Generator,Transformer,Capacitor,Inductor,Grid,Relay,Fuse,Powerline,Eel,Stingray,Ray,Catfish,Platypus,Echidna,Honeybee,Jaguar,Tapir,Toucan,Macaw,Anaconda,Caiman,Capybara,Piranha,Arapaima,Tamarin,Sloth,Anteater,Ocelot,Harpy,Manedwolf,Rhea'.split(',')
@@ -248,18 +248,18 @@ NICKNAMES_LASER = 'Retina,Iris,Pupil,Lens,Cornea,Sclera,Optic,Beam,Focus,Glare,G
 NICKNAMES_TECH = 'Robot,Automaton,Cyborg,Mech,Servo,Actuator,Sensor,Transistor,Diode,Microchip,Processor,Mainframe,Servosystem,Algorithm,Protocol,Gateway,Router,Inverter,Converter,Transformer,Chopper,Regulator,Stabilizer,Feedback,Blaster,Railgun,Turret,Cannon,Launcher,Gauss,Rocket,Missile,Grenade,Torpedo,Shotgun,Plasma,Quantum,Photon,Neutron,Pulse,Cybertron,Mechatron,Voltar,Sparkwire,Omnibot,Dreadnought,Ironclad,Sentinel,Turbojet,Circuit'.split(',')
 NICKNAMES_SOLAR = 'Sun,Sunlight,Sol,Helio,Corona,Solaris,Radiance,Bright,Aurora,Sunburst,Sunbeam,Sunray,Solstice,Equinox,Daybreak,Dawn,Daystar,Heliacal,Sirius,Canopus,Alpha Centauri,Arcturus,Vega,Capella,Rigel,Procyon,Achernar,Betelgeuse,Hadar,Altair,Acrux,Aldebaran,Antares,Spica,Pollux,Fomalhaut,Deneb,Mimosa,Regulus,Adhara,Shaula,Gacrux,Bellatrix,Elnath,Peacock,Polaris,Algol,Castor'.split(',')
 NICKNAMES_WEATHER = 'Rain,Storm,Tempest,Nimbus,Cyclone,Tornado,Hurricane,Monsoon,Thunder,Lightning,Thunderbolt,Cloud,Mist,Fog,Drizzle,Downpour,Dew,Frost,Blizzard,Wind,Gale,Gust,Breeze,Drought,Heatwave,Flood,Oak,Birch,Cedar,Pine,Fir,Willow,Maple,Aspen,Elm,Redwood,Sequoia,Spruce,Walnut,Ash,Chestnut,Rowan,Acacia,Eucalyptus,Palm,Olive,Cypress,Yew,Juniper,Banyan,Mangrove,Baobab'.split(',')
-NICKNAMES_NATURE = 'Forest,Jungle,Wild,Flora,Fauna,Biome,Ecosystem,Greenwood,Grove,Meander,Glade,Thicket,Canopy,Blossom,Thistle,Fern,Moss,Ivy,Foliage,Verdant,Dodo,Kakapo,Wollemia,Ginkgo,Cycad,Bristlecone,Rose,Tulip,Lily,Peony,Lotus,Vaquita,Amur,Sumatran,Pangolin,Thylacine,Quagga,Moa,Pigeon,Rhinoceros,Gibbon,Bamboo,Orchid,Primrose,Marigold,Sunflower,Wildflower,Greensward,Chaparral,Savanna,Prairie,Tundra,Evergreen'.split(',')
+NICKNAMES_NATURE = 'Forest,Jungle,Wild,Flora,Fauna,Biome,Ecosystem,Greenwood,Grove,Meander,Glade,Thicket,Canopy,Blossom,Thistle,Fern,Moss,Ivy,Foliage,Verdant,Dodo,Kakapo,Wollemia,Ginkgo,Cycad,Bristlecone,Rose,Tulip,Lily,Peony,Lotus,Vaquita,Amur,Sumatran,Pangolin,Thylacine,Quagga,Moa,Pigeon,Rhinoceros,Gibbon,Bamboo,Orchid,Primrose,Marigold,Sunflower,Wildflower,Porcini,Morel,Shiitake,Greensward,Chaparral,Savanna,Prairie,Tundra,Evergreen'.split(',')
 NICKNAMES_SHIELD = 'Shield,Aegis,Barricade,Bulwark,Fortress,Castle,Citadel,Keep,Rampart,Bastion,Redoubt,Palisade,Stockade,Wall,Buckler,Targe,Cuirass,Armor,Breastplate,Plackart,Gambeson,Hauberk,Brigandine,Lorica,Mail,Hoplon,Tower,Bunker,Pillbox,Armadillo,Chelonian,Tortoise,Turtle,Alligator,Ankylosaurus,Glyptodont,Pangolin,Hedgehog,Porcupine,Crocodile,Beetle,Snail,Mollusk,Clam,Oyster,Nautilus,Conch,Walnut,Hazelnut,Chestnut,Acorn,Pecan,Cashew,Almond'.split(',')
-NICKNAMES_ELASTIC = 'Elastic,Rubber,Gum,Bungee,Trampoline,Spring,Coil,Zigzag,Contortion,Acrobat,Gymnast,Jester,Tumbler,Pogo,Slinky,Yoyo,Jumping Jack,Stretch,Lithe,Limber,Supple,Sling,Bend,Snap,Twist,Flex,Bounce,Squirrel,Monkey,Gibbon,Treefrog,Gecko,Bushbaby,Galago,Tarsier,Chameleon,Octopus,Snake,Eel,Kangaroo,Wallaby,Springhare,Jerboa,Grasshopper,Flea,Spider,Nimble,Whippet'.split(',')
-NICKNAMES_ENERGY = 'Energy,Power,Vigor,Vitality,Kinetic,Thermal,Atomic,Radiance,Luminosity,Geyser,Caloric,Metabolism,Biomass,Stamina,Endurance,Adrenaline,Dopamine,Caffeine,Taurine,Glucose,Mate,Matcha,Yerba,Coffee,Cocoa,Cacao,Tea,Espresso,Latte,Banana,Apple,Date,Blueberry,Goji,Avocado,Pomegranate,Quinoa,Oat,Beetroot,Kale,Spinach,Fig,Grape,Cherry,Mango,Orange,Peach,Plum,Pear,Cardio'.split(',')
+NICKNAMES_ELASTIC = 'Elastic,Rubber,Gum,Bungee,Trampoline,Spring,Coil,Zigzag,Contortion,Acrobat,Gymnast,Trapeze,Jester,Tumbler,Pogo,Slinky,Yoyo,Jumping Jack,Stretch,Lithe,Limber,Supple,Sling,Bend,Snap,Twist,Flex,Bounce,Squirrel,Monkey,Gibbon,Treefrog,Gecko,Bushbaby,Galago,Tarsier,Chameleon,Octopus,Snake,Eel,Kangaroo,Wallaby,Springhare,Jerboa,Grasshopper,Flea,Spider,Nimble,Whippet'.split(',')
+NICKNAMES_ENERGY = 'Energy,Power,Vigor,Vitality,Kinetic,Thermal,Atomic,Radiance,Luminosity,Geyser,Caloric,Stamina,Endurance,Adrenaline,Dopamine,Caffeine,Taurine,Glucose,Mate,Matcha,Yerba,Coffee,Cocoa,Cacao,Tea,Espresso,Latte,Banana,Apple,Date,Blueberry,Goji,Avocado,Pomegranate,Quinoa,Oat,Beetroot,Kale,Spinach,Fig,Grape,Cherry,Mango,Orange,Peach,Plum,Pear,Cardio,Kiwi,Tangerine,Pineapple'.split(',')
 NICKNAMES_WATER = 'Rain,River,Ocean,Stream,Lake,Waterfall,Wave,Current,Tide,Fountain,Spring,Mist,Fog,Dew,Droplet,Splash,Drizzle,Flood,Aquifer,Seawater,Puddle,Anemone,Barracuda,Beluga,Coral,Crayfish,Dolphin,Eel,Flounder,Grouper,Guppy,Haddock,Halibut,Hammerhead,Herring,Jellyfish,Koi,Krill,Lobster,Mahi,Manatee,Marlin,Manta,Minnow,Narwhal,Octopus,Oyster,Orca,Otter,Piranha,Porpoise,Ray,Salmon,Sardine,Seahorse,Seal,Seaweed,Shark,Sponge'.split(',')
-NICKNAMES_ICE = 'Frost,Glacier,Blizzard,Chill,Rime,Snow,Tundra,Flurry,Drift,Slush,Polar,Gel,Crystal,Freeze,Mantle,Iceberg,Hoarfrost,Winter,Flake,Arctic,Siberian,Glacial,Nival,Walrus,Seal,Harp,Weddell,Crabeater,Ross,Monk,Narwhal,Beluga,Muskox,Caribou,Reindeer,Lemming,Snowshoe,Hare,Ptarmigan,Petrel,Skua,Guillemot,Gull,Tern,Puffin,Penguin,Adelie,Emperor,Chinstrap,Snowyowl,Gyrfalcon'.split(',')
-NICKNAMES_ACID = 'Acid,Corrosive,Caustic,Venom,Poison,Toxin,Cyanide,Arsenic,Hemlock,Belladonna,Wolfsbane,Foxglove,Oleander,Nightshade,Monkshood,Aconite,Strychnine,Ricin,Vitriol,Viper,Cobra,Blackmamba,Taipan,Bushmaster,Coral,Rattlesnake,Adder,Krait,Pitohui,Scorpion,Tarantula,Atrax,Funnelweb,Recluse,Black Widow,Cone,Stonefish,Conefish,Jellyfish,Boxjelly,Pufferfish,Blowfish,Fugu,Spider,Frog,Toad,Newt,Stingray,Castorbean,Rosarypea,Milkweed,Digitalis,Salamander'.split(',')
+NICKNAMES_ICE = 'Frost,Glacier,Blizzard,Chill,Rime,Snow,Tundra,Flurry,Drift,Slush,Polar,Gel,Crystal,Freeze,Mantle,Iceberg,Hoarfrost,Winter,Flake,Arctic,Siberian,Glacial,Nival,Walrus,Seal,Harp,Weddell,Crabeater,Ross,Monk,Narwhal,Beluga,Muskox,Caribou,Reindeer,Lemming,Snowshoe,Hare,Ptarmigan,Petrel,Skua,Guillemot,Gull,Tern,Puffin,Penguin,Adelie,Emperor,Chinstrap,Snowy Owl,Gyrfalcon'.split(',')
+NICKNAMES_ACID = 'Acid,Corrosive,Caustic,Venom,Poison,Toxin,Cyanide,Arsenic,Ivy,Hemlock,Belladonna,Wolfsbane,Foxglove,Oleander,Nightshade,Monkshood,Aconite,Strychnine,Ricin,Vitriol,Viper,Cobra,Mamba,Taipan,Bushmaster,Coral,Rattlesnake,Adder,Krait,Pitohui,Scorpion,Tarantula,Atrax,Funnelweb,Recluse,Black Widow,Cone,Stonefish,Conefish,Jellyfish,Boxjelly,Pufferfish,Blowfish,Fugu,Spider,Frog,Toad,Phyllobates,Newt,Stingray,Milkweed,Digitalis,Salamander,Amanita,Deathcap'.split(',')
 NICKNAMES_MIND = 'Mind,Psyche,Focus,Thought,Cogito,Logos,Nous,Ponder,Contemplation,Reason,Rational,Insight,Wisdom,Sagacity,Introspect,Reflect,Enigma,Puzzle,Riddle,Sphinx,Mystic,Sage,Philosopher,Academic,Scholar,Savant,Genius,Prodigy,Abstract,Paradox,Dilemma,Dolphin,Orca,Elephant,Chimpanzee,Octopus,Crow,Raven,Macaw,Parrot,Cuttlefish,Raccoon,Pig,Shark,Aye-aye,Capuchin,Jay,Magpie,Coyote,Fox'.split(',')
 NICKNAMES_GRAVITY = 'Gravity,Friction,Tension,Thrust,Drag,Lift,Torque,Impulse,Momentum,Inertia,Pressure,Stress,Strain,Weight,Force,Accelerator,Decelerator,Jolt,Velocity,Oscillator,Vibration,Wave,Field,Reflect,Scatter,Damping,Resistor,Shear,Compress,Expand,Contract,Traction,Equilibrium,Planet,Star,Galaxy,Comet,Asteroid,Nebula,Orbit,Cosmos,Eclipse,Pulsar,Vacuum,Mercury,Venus,Earth,Mars,Jupiter,Saturn,Uranus,Neptune,Ceres,Pluto,Eris,Haumea,Makemake,Gonggong,Ganymede,Titan,Callisto,Io,Moon,Europa,Triton,Titania,Rhea,Oberon,Iapetus'.split(',')
-NICKNAMES_TIME = 'Time,Clock,Chronos,Hourglass,Pendulum,Metronome,Moment,Instant,Epoch,Era,Season,Tide,Cycle,Rhythm,Tempo,Pulse,Kairos,Legacy,Dragon,Wyvern,Griffin,Phoenix,Unicorn,Pegasus,Chimera,Manticore,Basilisk,Hydra,Cerberus,Kraken,Minotaur,Centaur,Simurgh,Qilin,Fenghuang,Ifrit,Roc,Garuda,Yeti,Pixiu,Kitsune,Tanuki,Ouroboros,Quetzalcoatl,Winged,Feathered,Serpent,Thunderbird'.split(',')
+NICKNAMES_TIME = 'Time,Clock,Chronos,Hourglass,Pendulum,Metronome,Moment,Instant,Epoch,Era,Season,Tide,Cycle,Rhythm,Tempo,Pulse,Kairos,Legacy,Dragon,Wyvern,Griffin,Phoenix,Unicorn,Pegasus,Chimera,Manticore,Basilisk,Hydra,Cerberus,Kraken,Minotaur,Centaur,Simurgh,Qilin,Fenghuang,Ifrit,Roc,Garuda,Yeti,Pixiu,Kitsune,Tanuki,Ouroboros,Quetzalcoatl,Serpent,Thunderbird'.split(',')
 NICKNAMES_CYBER = 'Cyber,Cipher,Bit,Byte,Kilobyte,Kernel,Syscall,Firewall,Backdoor,Trojan,Virus,Worm,Zombie,Bot,Rootkit,Keylogger,Ransomware,Phish,Spoof,Sniffer,Proxy,Tunnel,Packet,Latency,Hex,Binary,Neural,Net,Bug,Crash,Glitch,Script,Compiler,Debugger,Recursion,Mutex,Cache,Stack,Heap,Bruteforce,Malware,Exploit,Payload,Botnet,Digit,Node,Mesh,Syntax,Hacker,Netrunner,Codepoet'.split(',')
-NICKNAMES_SONIC = 'Sonic,Sound,Echo,Resonance,Reverb,Vibration,Frequency,Pitch,Tone,Timbre,Chord,Rhythm,Beat,Tempo,Melody,Harmony,Aria,Chorus,Crescendo,Decibel,Forte,Treble,Bass,Alto,Tenor,Soprano,Baritone,Sonata,Symphony,Serenade,Anthem,Overture,Riff,Cymbal,Gong,Trumpet,Horn,Whistle,Hum,Buzz,Ring,Clang,Chime,Bat,Moth,Owl,Wolf,Fox,Dolphin,Sealion,Elephant,Rat,Whale,Shrew,Tenrec,Aye-aye,Swiftlet,Oilbird,Dormouse'.split(',')
+NICKNAMES_SONIC = 'Sonic,Sound,Echo,Resonance,Reverb,Vibration,Frequency,Pitch,Tone,Timbre,Chord,Rhythm,Beat,Tempo,Melody,Harmony,Aria,Chorus,Crescendo,Decibel,Forte,Treble,Bass,Alto,Tenor,Soprano,Baritone,Sonata,Symphony,Serenade,Anthem,Overture,Riff,Cymbal,Gong,Trumpet,Horn,Whistle,Hum,Buzz,Ring,Clang,Chime,Bat,Moth,Owl,Wolf,Fox,Dolphin,Sealion,Elephant,Kangaroo Rat,Whale,Shrew,Tenrec,Aye-aye,Swiftlet,Oilbird,Dormouse'.split(',')
 
 FACULTY_NICKNAMES = {
     'Strength': NICKNAMES_STRENGTH,
