@@ -68,10 +68,7 @@ def format_immunities(immunities):
 # ==========================================
 def generate_stats(gender, power, rand):
     """Generate base (zero-course) stats for a student."""
-    if gender == 'male':
-        hp = 50 + 10 * rand.randint(0, 15)
-    else:
-        hp = 150 + 10 * rand.randint(0, 15)
+    hp = (50 if gender == 'male' else 90) + 10 * rand.randint(0, 6)
     mp = rand.randint(0, 3)
     dmg = rand.randint(8, 24) if gender == 'male' else rand.randint(1, 10)
     pwr = rand.randint(1, PWR_BASE[POWER_CLASSES[power]] // 5) * 5
@@ -237,7 +234,7 @@ def generate_missions(month, rand):
     max_mdmg = 4 + 4 * months_passed
     max_rdmg = 4 + 4 * months_passed
     max_nm = months_passed // 3
-    max_k = months_passed // 4
+    max_k = months_passed // 3
 
     for _ in range(INITIAL_MISSIONS):
         country, city = generate_country_and_city(rand)

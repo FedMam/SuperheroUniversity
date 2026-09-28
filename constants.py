@@ -85,23 +85,23 @@ POWER_COLORS = {
 }
 
 # Power class defaults for PWR.
-PWR_BASE = {"Attack": 20, "Heal": 20, "Splash": 10}
-PWR_GROWTH_DEFAULT = {"Attack": 20, "Heal": 10, "Splash": 5}
+PWR_BASE = {"Attack": 20, "Heal": 20, "Splash": 5}
+PWR_GROWTH_DEFAULT = {"Attack": 10, "Heal": 10, "Splash": 4}
 
 # Default per-course stat growth (PWR depends on class, handled separately).
-COURSE_GROWTH_DEFAULT = {"HP": 50, "MP": 2, "DMG": 4, "DEF": 0.25, "AGL": 0.25}
+COURSE_GROWTH_DEFAULT = {"HP": 25, "MP": 1, "DMG": 4, "DEF": 0.2, "AGL": 0.2}
 
 # Per-power overrides for per-course growth.
 POWER_GROWTHS = {
-    "Strength": {"DMG": 8, "PWR": 15},
-    "Speed": {"AGL": 0.75, "DMG": 2},
-    "Flight": {"DEF": 0.75, "AGL": 0.125},
-    "Fire": {"PWR": 8},
+    "Strength": {"DMG": 8, "AGL": 0.1},
+    "Speed": {"AGL": 1.0, "DMG": 2, "DEF": 0.1},
+    "Flight": {"DEF": 1.0, "DMG": 2, "AGL": 0.1},
+    "Fire": {"PWR": 6},
     "Slash": {"DMG": 6},
-    "Laser": {"PWR": 30},
-    "Tech": {"HP": 60, "DEF": 0.4},
-    "Solar": {"PWR": 50, "HP": 20},
-    "Nature": {"HP": 75},
+    "Laser": {"PWR": 15},
+    "Tech": {"HP": 30, "DEF": 0.3},
+    "Solar": {"PWR": 30, "HP": 10},
+    "Nature": {"HP": 50},
     "Shield": {"DEF": 0.5},
     "Elastic": {"AGL": 0.5},
 }
