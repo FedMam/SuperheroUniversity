@@ -6,30 +6,50 @@ from typing import List
 from colorama import Fore, Style
 
 from constants import ENEMY_BUFFS, POWER_CLASSES, POWER_COLORS, TEAM_BUFFS, ENABLE_BATTLE_PREDICTIONS
-from models import Mission, Student
+from models import Mission, Minion, Student
 
-def _apply_team_buffs(heroes: List[Student]):
-    for teammate in heroes:
-        power = teammate.power
+def _display_name(combatant) -> str:
+    """Heroes are known by their superhero name, minions by their minion name."""
+    name = getattr(combatant, 'superhero_name', None) or combatant.name
+    return f'{Style.BRIGHT}{name}{Style.RESET_ALL}'
+
+def _apply_stat_buff(ally, stat: str, factor: float):
+    """Buff only the stats the ally actually has: converted minions have no MP/DMG/PWR."""
+    if stat == 'hp' or stat == 'all':
+        if hasattr(ally, 'max_hp'):
+            ally.hp = math.floor(ally.hp * (1 + factor))
+            ally.max_hp = math.floor(ally.max_hp * (1 + factor))
+    if stat == 'mp' or stat == 'all':
+        if hasattr(ally, 'max_mp'):
+            ally.mp = math.floor(ally.mp * (1 + factor))
+            ally.max_mp = math.floor(ally.max_mp * (1 + factor))
+    if stat == 'dmg' or stat == 'all':
+        if hasattr(ally, 'dmg'):
+            ally.dmg = math.floor(ally.dmg * (1 + factor))
+        if hasattr(ally, 'mdmg'):
+            ally.mdmg = math.floor(ally.mdmg * (1 + factor))
+    if stat == 'pwr' or stat == 'all':
+        if hasattr(ally, 'pwr'):
+            ally.pwr = math.floor(ally.pwr * (1 + factor))
+        if hasattr(ally, 'rdmg'):
+            ally.rdmg = math.floor(ally.rdmg * (1 + factor))
+    if stat == 'def' or stat == 'all':
+        if hasattr(ally, 'defense'):
+            ally.defense *= (1 + factor)
+    if stat == 'agl' or stat == 'all':
+        if hasattr(ally, 'agl'):
+            ally.agl *= (1 + factor)
+
+def _apply_team_buffs(allies: List[Student]):
+    for teammate in allies:
+        power = getattr(teammate, 'power', None)
         if power not in TEAM_BUFFS:
             continue
+
         stat, factor = TEAM_BUFFS[power]
-        
-        for hero in heroes:
-            if stat == 'hp' or stat == 'all':
-                hero.hp = math.floor(hero.hp * (1 + factor))
-                hero.max_hp = math.floor(hero.max_hp * (1 + factor))
-            if stat == 'mp' or stat == 'all':
-                hero.mp = math.floor(hero.mp * (1 + factor))
-                hero.max_mp = math.floor(hero.max_mp * (1 + factor))
-            if stat == 'dmg' or stat == 'all':
-                hero.dmg = math.floor(hero.dmg * (1 + factor))
-            if stat == 'pwr' or stat == 'all':
-                hero.pwr = math.floor(hero.pwr * (1 + factor))
-            if stat == 'def' or stat == 'all':
-                hero.defense *= (1 + factor)
-            if stat == 'agl' or stat == 'all':
-                hero.agl *= (1 + factor)
+
+        for ally in allies:
+            _apply_stat_buff(ally, stat, factor)
 
 def _apply_enemy_buffs(villains, heroes: List[Student]):
     for h in heroes:
@@ -37,7 +57,6 @@ def _apply_enemy_buffs(villains, heroes: List[Student]):
             continue
         
         stat, factor = ENEMY_BUFFS[h.power]
-        
         
         for v in villains:
             if stat == 'hp' or stat == 'all':
@@ -48,13 +67,21 @@ def _apply_enemy_buffs(villains, heroes: List[Student]):
             if stat == 'rdmg' or stat == 'all':
                 v.rdmg = math.floor(v.rdmg * (1 - factor))
 
-def _apply_mind_defection(mission: Mission, heroes: List[Student], rand, verbose: bool=False):
+def _apply_mind_defection(mission: Mission, heroes: List[Student], rand, verbose: bool=False) -> List[Minion]:
+    """Take the defected minions out of the villain's ranks and hand them to the heroes.
+
+    Must run before team buffs / enemy debuffs: converted minions get the team buffs
+    and are immune to the enemy-wide debuffs.
+    """
+    converted = []
     for _ in (h for h in heroes if h.power == 'Mind'):
-        for mn in mission.villain.minions:
+        for mn in mission.villain.minions[:]:
             if mn.hp > 0 and rand.random() < 0.20:
-                mn.hp = 0
+                mission.villain.minions.remove(mn)
+                converted.append(mn)
                 if verbose:
-                    print(f'{Style.BRIGHT}{mn.name}{Style.RESET_ALL} defects and leaves the battle!')
+                    print(f'{_display_name(mn)} defects from {Style.BRIGHT}{mission.villain.name}{Style.RESET_ALL} and joins the heroes!')
+    return converted
 
 def _lowest_hp_enemy(mission: Mission):
     alive_minions = [m for m in mission.villain.minions if m.hp > 0]
@@ -63,6 +90,60 @@ def _lowest_hp_enemy(mission: Mission):
     if mission.villain.hp > 0:
         return mission.villain
     return None
+
+def _random_enemy_target(mission: Mission, rand):
+    """A random minion of the villain's side, or the villain if it stands alone."""
+    alive_minions = [m for m in mission.villain.minions if m.hp > 0]
+    if alive_minions:
+        return rand.choice(alive_minions)
+    if mission.villain.hp > 0:
+        return mission.villain
+    return None
+
+def _melee_or_ranged_attack(attacker, target, rand, verbose: bool=False):
+    attacker_name = _display_name(attacker)
+    target_name = _display_name(target)
+
+    if rand.choice([True, False]):  # Melee
+        damage = math.ceil(attacker.mdmg / target.defense)
+        target.hp -= damage
+        if verbose:
+            print(f"{attacker_name} uses melee attack on {target_name} for {damage} damage! Remaining HP: {target.hp}")
+    else:  # Ranged
+        if rand.random() < 1 / target.agl:
+            target.hp -= attacker.rdmg
+            if verbose:
+                print(f"{attacker_name} uses ranged attack on {target_name} for {attacker.rdmg} damage! Remaining HP: {target.hp}")
+        else:
+            if verbose:
+                print(f"{attacker_name} uses ranged attack on {target_name} but MISSES!")
+
+def _announce_enemy_deaths(alive_villains, verbose: bool=False):
+    for v in alive_villains[:]:
+        if v.hp > 0:
+            continue
+        if verbose:
+            print(f'{_display_name(v)} is dead!')
+        alive_villains.remove(v)
+
+def _handle_ally_death(ally, revived, time_revives: int, dead_heroes, verbose: bool=False) -> int:
+    """Time heroes get one revival each. Only real heroes ever join the dead list."""
+    if time_revives > 0 and ally not in revived:
+        revived.add(ally)
+        ally.hp = ally.max_hp / 2
+        if verbose:
+            print(f'{_display_name(ally)} gains one more chance at half health ({round(ally.hp)} HP)!')
+        return time_revives - 1
+
+    if verbose:
+        print(f'{_display_name(ally)} is dead!')
+    if isinstance(ally, Student):
+        dead_heroes.append(ally)
+    return time_revives
+
+def _restore_heroes(heroes: List[Student], snapshot):
+    for h in heroes:
+        h.hp, h.max_hp, h.mp, h.max_mp, h.dmg, h.pwr, h.defense, h.agl = snapshot[h]
 
 def _attack_uses_super(hero: Student, target, mission: Mission, heroes: List[Student]) -> bool:
     if hero.mp <= 0 or hero.power in mission.villain.immunities or hero.pwr <= hero.dmg:
@@ -80,22 +161,22 @@ def _attack_uses_super(hero: Student, target, mission: Mission, heroes: List[Stu
     )
     return pool > mission.villain.hp
 
-def _heal_decision(hero: Student, mission: Mission, heroes: List[Student]):
-    # Returns (should_heal, target) or (False, None).
+def _heal_decision(hero: Student, mission: Mission, allies: List[Student]):
+    # Returns (should_heal, target) or (False, None). Converted minions are allies too.
     if hero.mp <= 0 or hero.power in mission.villain.immunities:
         return False, None
-    injured = [h for h in heroes if h.hp > 0 and h.hp < h.max_hp - hero.pwr * 3 // 4]
+    injured = [a for a in allies if a.hp > 0 and a.hp < a.max_hp - hero.pwr * 3 // 4]
     if not injured:
         return False, None
     only_villain_left = not [m for m in mission.villain.minions if m.hp > 0]
-    anyone_critical = any(h.hp < h.max_hp // 2 for h in heroes if h.hp > 0)
+    anyone_critical = any(a.hp < a.max_hp // 2 for a in allies if a.hp > 0)
     if not (only_villain_left or anyone_critical):
         return False, None
-    critical = [h for h in injured if h.hp < h.max_hp // 2]
+    critical = [a for a in injured if a.hp < a.max_hp // 2]
     if critical:
-        target = min(critical, key=lambda h: h.hp)
+        target = min(critical, key=lambda a: a.hp)
     else:
-        target = min(injured, key=lambda h: h.hp)
+        target = min(injured, key=lambda a: a.hp)
     return True, target
 
 def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=False):
@@ -105,45 +186,51 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
             print(f'--- No heroes assigned, mission FAILED! ---\n')
         return False, []
 
-    villains = [mission.villain] + mission.villain.minions
     dead_heroes = []
 
     snapshot = {}
     for h in heroes:
         snapshot[h] = (h.hp, h.max_hp, h.mp, h.max_mp, h.dmg, h.pwr, h.defense, h.agl)
 
-    _apply_team_buffs(heroes)
+    if verbose:
+        print(f'--- Mission in {mission.city}! ---')
+
+    # Mind comes first: defected minions join the heroes before buffs are applied.
+    converted = _apply_mind_defection(mission, heroes, rand, verbose)
+    allies = list(heroes) + converted
+    villains = [mission.villain] + mission.villain.minions
+
+    _apply_team_buffs(allies)
     _apply_enemy_buffs(villains, heroes)
-    _apply_mind_defection(mission, heroes, rand, verbose)
 
     time_revives = sum(1 for h in heroes if h.power == 'Time')
     revived = set()
 
     if verbose:
-        print(f'--- Mission in {mission.city}! ---')
         for h in heroes:
             print(f"{h.superhero_name}: HP {h.max_hp}, MP {h.max_mp}, DMG {h.dmg}, PWR {h.pwr}, DEF {h.defense:.2f}, AGL {h.agl:.2f}")
         print('--- VERSUS ---')
         print(f"{mission.villain.name}: HP {mission.villain.max_hp}")
         if len(mission.villain.minions) > 0:
             print(f"{len(mission.villain.minions)} minions: HP {mission.villain.minions[0].max_hp}")
+        if converted:
+            print(f"{len(converted)} defected minion(s) fight for the heroes: HP {converted[0].max_hp}")
         print('--- FIGHT! ---')
 
     turn = 0
     while True:
         alive_villains = [v for v in villains if v.hp > 0]
         alive_heroes = [h for h in heroes if h.hp > 0]
+        alive_allies = [a for a in allies if a.hp > 0]
 
         if not alive_villains:
-            for h in heroes:
-                h.hp, h.max_hp, h.mp, h.max_mp, h.dmg, h.pwr, h.defense, h.agl = snapshot[h]
+            _restore_heroes(heroes, snapshot)
             if verbose:
                 print(f'--- All villains are dead, mission SUCCESS! ---\n')
             return True, dead_heroes
 
-        if not alive_heroes:
-            for h in heroes:
-                h.hp, h.max_hp, h.mp, h.max_mp, h.dmg, h.pwr, h.defense, h.agl = snapshot[h]
+        if not alive_allies:
+            _restore_heroes(heroes, snapshot)
             if verbose:
                 print(f'--- All heroes are dead, mission FAILED! ---\n')
             return False, dead_heroes
@@ -179,12 +266,12 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
                         print(f"{hero_name} punches {t_name} for {hero.dmg} damage! Remaining HP: {target.hp}")
 
             elif class_ == 'Heal':
-                should_heal, heal_target = _heal_decision(hero, mission, heroes)
+                should_heal, heal_target = _heal_decision(hero, mission, allies)
                 if should_heal:
                     healed = min(hero.pwr, heal_target.max_hp - heal_target.hp)
                     heal_target.hp += healed
                     hero.mp -= 1
-                    t_name = f'{Style.BRIGHT}{heal_target.superhero_name}{Style.RESET_ALL}'
+                    t_name = _display_name(heal_target)
                     if verbose:
                         print(f"{hero_name} uses {pwr_color}{hero.power}{Style.RESET_ALL} to heal {t_name} for {healed} HP! Remaining HP: {heal_target.hp}")
                 else:
@@ -214,19 +301,10 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
                     if verbose:
                         print(f"{hero_name} punches {t_name} for {hero.dmg} damage! Remaining HP: {target.hp}")
 
-            if mission.villain.hp <= 0 and mission.villain in alive_villains:
-                if verbose:
-                    print(f'{Style.BRIGHT}{mission.villain.name}{Style.RESET_ALL} is dead!')
-                alive_villains.remove(mission.villain)
-            for mn in mission.villain.minions:
-                if mn.hp <= 0 and mn in alive_villains:
-                    if verbose:
-                        print(f'{Style.BRIGHT}{mn.name}{Style.RESET_ALL} is dead!')
-                    alive_villains.remove(mn)
+            _announce_enemy_deaths(alive_villains, verbose)
 
         if not alive_villains:
-            for h in heroes:
-                h.hp, h.max_hp, h.mp, h.max_mp, h.dmg, h.pwr, h.defense, h.agl = snapshot[h]
+            _restore_heroes(heroes, snapshot)
             if verbose:
                 print(f'--- All villains are dead, mission SUCCESS! ---\n')
             return True, dead_heroes
@@ -235,43 +313,30 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
         for v in alive_villains:
             if v.hp <= 0:
                 continue
-            alive_heroes_now = [h for h in heroes if h.hp > 0]
-            if not alive_heroes_now:
+            alive_allies_now = [a for a in allies if a.hp > 0]
+            if not alive_allies_now:
                 break
-            target = rand.choice(alive_heroes_now)
+            target = rand.choice(alive_allies_now)
 
-            v_name = f'{Style.BRIGHT}{v.name}{Style.RESET_ALL}'
-            target_name = f'{Style.BRIGHT}{target.superhero_name}{Style.RESET_ALL}'
-
-            if rand.choice([True, False]):  # Melee
-                damage = math.ceil(v.mdmg / target.defense)
-                target.hp -= damage
-                if verbose:
-                    print(f"{v_name} uses melee attack on {target_name} for {damage} damage! Remaining HP: {target.hp}")
-            else:  # Ranged
-                if rand.random() < 1 / target.agl:
-                    target.hp -= v.rdmg
-                    if verbose:
-                        print(f"{v_name} uses ranged attack on {target_name} for {v.rdmg} damage! Remaining HP: {target.hp}")
-                else:
-                    if verbose:
-                        print(f"{v_name} uses ranged attack on {target_name} but MISSES!")
+            _melee_or_ranged_attack(v, target, rand, verbose)
 
             if target.hp <= 0:
-                if time_revives > 0 and target not in revived:
-                    revived.add(target)
-                    time_revives -= 1
-                    target.hp = target.max_hp / 2
-                    if verbose:
-                        print(f'{target_name} gains one more chance at half health ({round(target.hp)} HP)!')
-                else:
-                    if verbose:
-                        print(f'{target_name} is dead!')
-                    dead_heroes.append(target)
+                time_revives = _handle_ally_death(target, revived, time_revives, dead_heroes, verbose)
 
-        if not [h for h in heroes if h.hp > 0]:
-            for h in heroes:
-                h.hp, h.max_hp, h.mp, h.max_mp, h.dmg, h.pwr, h.defense, h.agl = snapshot[h]
+        # Defected minions turn
+        for c in converted:
+            if c.hp <= 0:
+                continue
+            target = _random_enemy_target(mission, rand)
+            if target is None:
+                break
+
+            _melee_or_ranged_attack(c, target, rand, verbose)
+
+            _announce_enemy_deaths(alive_villains, verbose)
+
+        if not [a for a in allies if a.hp > 0]:
+            _restore_heroes(heroes, snapshot)
             if verbose:
                 print(f'--- All heroes are dead, mission FAILED! ---\n')
             return False, dead_heroes

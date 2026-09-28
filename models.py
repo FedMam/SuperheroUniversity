@@ -44,6 +44,8 @@ class Minion:
         self.mdmg = mdmg
         self.rdmg = rdmg
         self.immunities = immunities
+        self.defense = 1.0
+        self.agl = 1.0
 
 class Villain:
     def __init__(self, name, vehicle_name, hp, mdmg, rdmg, nm, immunities, m_hp, m_mdmg, m_rdmg):
@@ -56,6 +58,8 @@ class Villain:
         self.nm = nm
         self.immunities = immunities
         self.minions = []
+        self.defense = 1.0
+        self.agl = 1.0
         self.m_hp = m_hp
         self.m_mdmg = m_mdmg
         self.m_rdmg = m_rdmg
