@@ -13,11 +13,10 @@ from constants import (
     MAX_COURSES_PER_STAT,
     MAX_MISSION_FAILS,
     MAX_STUDENTS,
+    MIN_TURNS_TO_GRADUATE,
     POWER_COLORS,
     SAVE_FILE_NAME,
     SHOW_BATTLE_PROGRESS,
-    START_YEAR,
-    END_YEAR,
     STUDENT_BASE_COST,
     TOTAL_TURNS,
 )
@@ -30,9 +29,11 @@ from utils import (
     course_cost,
     course_price_for,
     display_candidate,
+    display_final_score,
     display_missions,
     display_student,
     display_students,
+    display_study_progress,
     generate_candidate,
     generate_course_names,
     generate_missions,
@@ -41,6 +42,7 @@ from utils import (
     print_student_stats,
     rand,
     recruit_cost,
+    semester_label,
     take_course,
 )
 
@@ -64,37 +66,43 @@ def main():
     print('\nPress [ENTER] to continue: ')
     input()
 
-    print(f'''You are the President of the International Superhero University. Supervillain activity is surging! Train your students and assign them to missions to save the world. The game starts in {START_YEAR}. Reach the year {END_YEAR} to win!
+    print(f'''You are the President of the International Superhero University. Supervillain activity is surging! Train your students and assign them to missions to save the world. The game starts in {semester_label(0)} and lasts {TOTAL_TURNS} semesters (until {semester_label(TOTAL_TURNS - 1)}) to win!
 
-[ MONTHLY CYCLE ]
-Each turn is ONE MONTH. Use your budget to prepare:
- - RECRUIT (,): Every turn 3 student candidates are generated. Review their stats and superpowers and enroll the ones you like (from $85, +$5 per faculty). The dormitory holds at most {MAX_STUDENTS} students; you can graduate a student to free up space.
-  - TRAIN (.): Buy courses to boost stats (each buy costs $10, +$10 each time, at most {MAX_COURSES_PER_STAT} courses of each kind per student). Six stat courses: (+HP), (+MP), (+DMG), (+PWR), (+DEF), (+AGL). Course names change every turn!
+[ SEMESTER CYCLE ]
+Each turn is ONE semester (Fall or Spring). Use your budget to prepare:
+  - RECRUIT (,): Every semester 3 student candidates are generated. Review their stats and superpowers and enroll the ones you like (from $85, +$5 per faculty). The dormitory holds at most {MAX_STUDENTS} students; you can graduate a student to free up space.
+  - TRAIN (.): Buy courses to boost stats (each buy costs $10, +$10 each time, at most {MAX_COURSES_PER_STAT} courses of each kind per student). Six stat courses: (+HP), (+MP), (+DMG), (+PWR), (+DEF), (+AGL). Course names change every semester!
+  - GRADUATE (G): A student may only graduate after {MIN_TURNS_TO_GRADUATE} semesters (4 years) of study. Graduating frees a dorm slot.
 
 [ SUPERPOWERS ]
 Powers belong to three classes:
- - Attack: super-attack deals PWR damage to the weakest enemy.
- - Heal:   super-attack heals a teammate by PWR.
- - Splash: super-attack deals PWR damage to ALL enemies.
+  - Attack: super-attack deals PWR damage to the weakest enemy.
+  - Heal:   super-attack heals a teammate by PWR.
+  - Splash: super-attack deals PWR damage to ALL enemies.
 Powers also carry team-wide or enemy-wide side effects (buffs / debuffs).
 
 [ MISSIONS & COMBAT ]
-Always 3 missions per month. Assign students to stop supervillains. Combat is automatic:
- 1. HEROES ACT FIRST: they choose when to spend MP efficiently.
- 2. VILLAINS RETALIATE: melee damage is reduced by the hero's DEF; ranged attacks may miss depending on AGL.
-Powers fail if the villain is IMMUNE to that superpower.
+Always 3 missions per semester. Assign students to stop supervillains. Combat is automatic:
+  1. HEROES ACT FIRST: they choose when to spend MP efficiently.
+  2. VILLAINS RETALIATE: melee damage is reduced by the hero's DEF; ranged attacks may miss depending on AGL.
+  A villain IMMUNE to a superpower cannot suffer ANY effect of it: no super-attack, no buff, no
+  debuff, and Mind/Time heroes lose their defections and their revivals.
 
 [ OUTCOMES ]
- - VICTORY: Earn prize money. Survivors' HP/MP are restored.
- - DEFEAT: Dead students are gone FOREVER. The mission fails.
+  - VICTORY: Earn prize money. Survivors' HP/MP are restored.
+  - DEFEAT: Dead students are gone FOREVER. The mission fails.
 
 [ GAME OVER ]
 You lose if {MAX_MISSION_FAILS} missions fail, or if you have 0 students and no 
-money to recruit new ones. Villains grow stronger every month!
+money to recruit new ones. Villains grow stronger every semester!
 
-================================================================
+[ FINAL SCORE ]
+Graduated students MINUS dead students. Every graduate you send off is +1, every student you
+lose to a villain is -1.
+
+============================================================
        Press [ENTER] to begin your presidency! Good luck!
-================================================================''')
+============================================================''')
     input('')
 
     if Path(SAVE_FILE_NAME).is_file():
@@ -102,23 +110,24 @@ money to recruit new ones. Villains grow stronger every month!
     else:
         default_state = True
 
-    month, money, total_failed_missions, students, missions, n_of_dead_students = load_state(rand, default=default_state)
+    turn, money, total_failed_missions, students, missions, n_of_dead_students, n_of_graduated_students = load_state(rand, default=default_state)
     candidates = [generate_candidate(rand) for _ in range(3)]
     course_names = generate_course_names(rand)
 
-    # month loop
+    # semester loop
     while True:
-        if month >= TOTAL_TURNS:
-            print(f"\n=== MONTH {month} ===")
-            print(f"Congratulations! You have guided the university to the year {END_YEAR}!")
+        if turn >= TOTAL_TURNS:
+            print(f"\n=== SEMESTER {turn}/{TOTAL_TURNS} ===")
+            print(f"Congratulations! You have guided the university to the end of {semester_label(turn - 1)}!")
             print("You WIN!")
+            display_final_score(n_of_graduated_students, n_of_dead_students)
             break
 
         def display_status_bar():
-            months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-            date_string = f'{months[month % 12]} {START_YEAR + month // 12}'
+            date_string = semester_label(turn)
             print(f"\n{'='*20} {date_string} {'='*(20 + 14 - len(date_string))}")
             print(f"Money: ${money} | Students: {len(students)}/{MAX_STUDENTS} | Failed Missions: {total_failed_missions}/{MAX_MISSION_FAILS}")
+            print(f"Graduated: {n_of_graduated_students} | Dead: {n_of_dead_students} | Score: {n_of_graduated_students - n_of_dead_students}")
 
         current_action = 'idle'
         current_student = None
@@ -155,7 +164,7 @@ money to recruit new ones. Villains grow stronger every month!
                 except KeyboardInterrupt:
                     resigned = True
                     if input('\nSave game? (Y/n) ').lower() != 'n':
-                        save_state(month, money, total_failed_missions, n_of_dead_students, students, missions)
+                        save_state(turn, money, total_failed_missions, n_of_dead_students, n_of_graduated_students, students, missions)
                     else:
                         print("Game Over! You have resigned.")
                     break
@@ -205,14 +214,14 @@ money to recruit new ones. Villains grow stronger every month!
                             current_student = None
                             time.sleep(1)
             elif current_action == 'accept':
-                print("Recruitment office - new candidates arrived this month:")
+                print("Recruitment office - new candidates arrived this semester:")
                 print()
                 if not candidates:
                     print("No candidates are available right now.")
                     input('Press [ENTER] to continue: ')
                     current_action = 'idle'
                 else:
-                    cost = recruit_cost(students, n_of_dead_students)
+                    cost = recruit_cost(students, n_of_dead_students + n_of_graduated_students)
                     for i, cand in enumerate(candidates):
                         display_candidate(cand, i + 1, cost)
                         print(f"   Enroll cost: ${cost}")
@@ -249,6 +258,7 @@ money to recruit new ones. Villains grow stronger every month!
                 else:
                     print(f'You are now managing [{s.uni_id}] {Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL}.')
                     print_student_stats(s)
+                    print(f'   Studied: {s.turns_studied} semester(s) | {display_study_progress(s)}')
                 print(f' Remaining money: ${money}')
 
                 course_letters = ['1', '2', '3', '4', '5', '6']
@@ -275,7 +285,10 @@ money to recruit new ones. Villains grow stronger every month!
                 else:
                     print(f'Press the corresponding key to buy a course for {Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL}.')
                     print(f'Press > to assign {Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL} to a mission.')
-                    print(f'Press G to graduate {Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL}.')
+                    if s.can_graduate():
+                        print(f'Press G to graduate {Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL}.')
+                    else:
+                        print(f'{Style.DIM}Press G to graduate {s.superhero_name} (available in {s.turns_to_graduate()} more semester(s)).{Style.RESET_ALL}')
                 print('Press spacebar to cancel.\nYour command: ', end='')
                 cmd = readchar.readkey().upper()
                 if cmd in course_letters:
@@ -305,13 +318,16 @@ money to recruit new ones. Villains grow stronger every month!
                 elif cmd == '>' and s != 'all':
                     current_action = 'assign'
                 elif cmd == 'G' and s != 'all':
-                    if input(f'\nGraduate {Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL} [{s.uni_id}]? This removes the student. (y/N) ').strip().lower() == 'y':
+                    if not s.can_graduate():
+                        print(f"\n{Style.BRIGHT}{Fore.RED}{s.superhero_name} must study for {MIN_TURNS_TO_GRADUATE} semesters (4 years) before graduating, {s.turns_to_graduate()} to go.{Style.RESET_ALL}")
+                        time.sleep(1)
+                    elif input(f'\nGraduate {Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL} [{s.uni_id}]? This removes the student and adds +1 to your final score. (y/N) ').strip().lower() == 'y':
                         students.remove(s)
                         if s.uni_id in assignments:
                             del assignments[s.uni_id]
                         current_action = 'idle'
                         current_student = None
-                        n_of_dead_students += 1
+                        n_of_graduated_students += 1
                         print(f'{Style.BRIGHT}{s.superhero_name}{Style.RESET_ALL} has graduated!')
                         input('Press [ENTER] to continue: ')
             elif current_action == 'assign':
@@ -386,17 +402,21 @@ money to recruit new ones. Villains grow stronger every month!
 
         if total_failed_missions >= MAX_MISSION_FAILS:
             print(f"\nGame Over! You failed {MAX_MISSION_FAILS} missions.")
+            display_final_score(n_of_graduated_students, n_of_dead_students)
             break
 
         if not students and money < STUDENT_BASE_COST:
             print("\nGame Over! All students are dead and you have no money to accept new ones.")
+            display_final_score(n_of_graduated_students, n_of_dead_students)
             break
 
         if resigned:
             break
 
-        month += 1
-        missions = generate_missions(month, rand)
+        turn += 1
+        for s in students:
+            s.turns_studied += 1
+        missions = generate_missions(turn, rand)
         candidates = [generate_candidate(rand) for _ in range(3)]
         course_names = generate_course_names(rand)
         assignments = {}

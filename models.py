@@ -1,11 +1,13 @@
 """Core game entities: students, minions, villains and missions."""
 
+from constants import MIN_TURNS_TO_GRADUATE
+
 # ==========================================
 # CLASSES
 # ==========================================
 class Student:
     def __init__(self, nation, gender, real_name, superhero_name, uni_id, power,
-                 hp, mp, dmg, pwr, defense, agl):
+                 hp, mp, dmg, pwr, defense, agl, turns_studied=0):
         self.nation = nation
         self.gender = gender
         self.real_name = real_name
@@ -20,6 +22,7 @@ class Student:
         self.pwr = pwr
         self.defense = defense
         self.agl = agl
+        self.turns_studied = turns_studied
         self.courses_taken = {
             "HP": 0,
             "MP": 0,
@@ -29,10 +32,18 @@ class Student:
             "AGL": 0
         }
 
+    def can_graduate(self) -> bool:
+        """A student may only graduate after MIN_TURNS_TO_GRADUATE semesters of study."""
+        return self.turns_studied >= MIN_TURNS_TO_GRADUATE
+
+    def turns_to_graduate(self) -> int:
+        return max(0, MIN_TURNS_TO_GRADUATE - self.turns_studied)
+
     def clone(self):
         clone = Student(self.nation, self.gender, self.real_name,
                         self.superhero_name, self.uni_id, self.power,
-                        self.hp, self.mp, self.dmg, self.pwr, self.defense, self.agl)
+                        self.hp, self.mp, self.dmg, self.pwr, self.defense, self.agl,
+                        self.turns_studied)
         clone.courses_taken = dict(self.courses_taken)
         return clone
 

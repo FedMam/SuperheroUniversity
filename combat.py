@@ -40,10 +40,11 @@ def _apply_stat_buff(ally, stat: str, factor: float):
         if hasattr(ally, 'agl'):
             ally.agl *= (1 + factor)
 
-def _apply_team_buffs(allies: List[Student]):
+def _apply_team_buffs(allies: List[Student], immunities: List[str]):
     for teammate in allies:
         power = getattr(teammate, 'power', None)
-        if power not in TEAM_BUFFS:
+        # A villain immune to the power negates every effect of it, buffs included.
+        if power not in TEAM_BUFFS or power in immunities:
             continue
 
         stat, factor = TEAM_BUFFS[power]
@@ -51,9 +52,10 @@ def _apply_team_buffs(allies: List[Student]):
         for ally in allies:
             _apply_stat_buff(ally, stat, factor)
 
-def _apply_enemy_buffs(villains, heroes: List[Student]):
+def _apply_enemy_buffs(villains, heroes: List[Student], immunities: List[str]):
     for h in heroes:
-        if h.power not in ENEMY_BUFFS:
+        # Same for debuffs: immune means no effect at all.
+        if h.power not in ENEMY_BUFFS or h.power in immunities:
             continue
         
         stat, factor = ENEMY_BUFFS[h.power]
@@ -71,8 +73,12 @@ def _apply_mind_defection(mission: Mission, heroes: List[Student], rand, verbose
     """Take the defected minions out of the villain's ranks and hand them to the heroes.
 
     Must run before team buffs / enemy debuffs: converted minions get the team buffs
-    and are immune to the enemy-wide debuffs.
+    and are immune to the enemy-wide debuffs. A villain immune to Mind cannot be
+    converted at all.
     """
+    if 'Mind' in mission.villain.immunities:
+        return []
+
     converted = []
     for _ in (h for h in heroes if h.power == 'Mind'):
         for mn in mission.villain.minions[:]:
@@ -200,10 +206,12 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
     allies = list(heroes) + converted
     villains = [mission.villain] + mission.villain.minions
 
-    _apply_team_buffs(allies)
-    _apply_enemy_buffs(villains, heroes)
+    immunities = mission.villain.immunities
+    _apply_team_buffs(allies, immunities)
+    _apply_enemy_buffs(villains, heroes, immunities)
 
-    time_revives = sum(1 for h in heroes if h.power == 'Time')
+    # A villain immune to Time leaves no room for any revival.
+    time_revives = 0 if 'Time' in immunities else sum(1 for h in heroes if h.power == 'Time')
     revived = set()
 
     if verbose:

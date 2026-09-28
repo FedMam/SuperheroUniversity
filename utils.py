@@ -22,7 +22,10 @@ from constants import (
     POWER_GROWTHS,
     PWR_BASE,
     PWR_GROWTH_DEFAULT,
+    SEMESTERS,
+    START_YEAR,
     SUPERPOWERS,
+    TURNS_PER_YEAR,
 )
 from models import Mission, Student, Villain
 from names import (
@@ -62,6 +65,26 @@ def format_immunities(immunities):
         res += POWER_COLORS[p] + POWER_CODES[p] + Style.RESET_ALL
     res += "]"
     return res
+
+def semester_label(turn: int) -> str:
+    """'Fall 2040' for the 1st turn, 'Spring 2040' for the 2nd, and so on."""
+    year = START_YEAR + turn // TURNS_PER_YEAR
+    return f'{SEMESTERS[turn % TURNS_PER_YEAR]} {year}'
+
+def display_study_progress(s) -> str:
+    if s.can_graduate():
+        return f'{Style.BRIGHT}{Fore.GREEN}can graduate{Style.RESET_ALL}'
+    return f'graduates in {s.turns_to_graduate()} more semester(s)'
+
+def display_final_score(n_of_graduated_students: int, n_of_dead_students: int) -> None:
+    """Final score: students graduated minus students lost."""
+    score = n_of_graduated_students - n_of_dead_students
+    print(f"\nGraduated students: {n_of_graduated_students} | Dead students: {n_of_dead_students}")
+    if score >= 0:
+        score_str = f'{Style.BRIGHT}{Fore.GREEN}{score}{Style.RESET_ALL}'
+    else:
+        score_str = f'{Style.BRIGHT}{Fore.RED}{score}{Style.RESET_ALL}'
+    print(f'FINAL SCORE: {n_of_graduated_students} graduated - {n_of_dead_students} dead = {score_str}')
 
 # ==========================================
 # STUDENT GENERATION
@@ -189,6 +212,7 @@ def display_student(s):
     print(f"[{s.uni_id}] {name} ({s.real_name}) | {s.nation} | {power}")
     print(f"   HP: {s.max_hp} | MP: {s.max_mp} | DMG: {s.dmg} | PWR: {s.pwr} | "
           f"DEF: {s.defense:.2f} | AGL: {s.agl:.2f}")
+    print(f"   Studied: {s.turns_studied} semester(s) | {display_study_progress(s)}")
 
 def display_students(students, assignments={}):
     print("\n--- STUDENTS ---")
@@ -226,15 +250,15 @@ def display_missions(missions, assignments, predictions):
 # MISSIONS
 # ==========================================
 MAX_MINIONS = 10
-def generate_missions(month, rand):
+def generate_missions(turn, rand):
     missions = []
 
-    months_passed = month
-    max_hp = 50 + 50 * months_passed
-    max_mdmg = 4 + 4 * months_passed
-    max_rdmg = 4 + 4 * months_passed
-    max_nm = months_passed // 3
-    max_k = months_passed // 3
+    turns_passed = turn
+    max_hp = 50 + 50 * turns_passed
+    max_mdmg = 4 + 4 * turns_passed
+    max_rdmg = 4 + 4 * turns_passed
+    max_nm = turns_passed // 3
+    max_k = turns_passed // 4
 
     for _ in range(INITIAL_MISSIONS):
         country, city = generate_country_and_city(rand)

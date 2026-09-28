@@ -12,10 +12,10 @@ from constants import (
 from models import Mission, Student, Villain
 from utils import accept_candidate, generate_candidate, generate_missions
 
-def save_state(month, money, total_failed_missions, n_of_dead_students, students, missions, filename=SAVE_FILE_NAME):
+def save_state(turn, money, total_failed_missions, n_of_dead_students, n_of_graduated_students, students, missions, filename=SAVE_FILE_NAME):
     file = open(filename, 'w')
 
-    file.write(f'{month} {money} {total_failed_missions} {n_of_dead_students}\n{len(students)}\n')
+    file.write(f'{turn} {money} {total_failed_missions} {n_of_dead_students} {n_of_graduated_students}\n{len(students)}\n')
     for s in students:
         file.write(f'{s.uni_id},{s.superhero_name},{s.gender},{s.real_name},{s.nation},{s.power},'
                    f'{s.hp},{s.mp},{s.dmg},{s.pwr},{s.defense},{s.agl},')
@@ -24,7 +24,7 @@ def save_state(month, money, total_failed_missions, n_of_dead_students, students
             if i < len(COURSE_STATS) - 1:
                 file.write(',')
 
-        file.write('\n')
+        file.write(f',{s.turns_studied}\n')
 
     file.write(f'{len(missions)}\n')
     for m in missions:
@@ -53,10 +53,13 @@ def load_state(rand, filename=SAVE_FILE_NAME, default: bool=False):
             accept_candidate(rand, generate_candidate(rand), students)
         # Generate initial missions
         missions = generate_missions(0, rand)
-        return 0, INITIAL_MONEY, 0, students, missions, 0
+        return 0, INITIAL_MONEY, 0, students, missions, 0, 0
 
     missions = []
-    month, money, total_failed_missions, n_of_dead_students = map(int, file.readline().split(' '))
+    state = list(map(int, file.readline().split(' ')))
+    turn, money, total_failed_missions, n_of_dead_students = state[:4]
+    # Saves made before the final score existed have no graduated count.
+    n_of_graduated_students = state[4] if len(state) > 4 else 0
     n_students = int(file.readline())
 
     for i in range(n_students):
@@ -68,6 +71,9 @@ def load_state(rand, filename=SAVE_FILE_NAME, default: bool=False):
         s = Student(nation, gender, real_name, hero_name, uni_id, power, hp, mp, dmg, pwr, defense, agl)
         for i, stat in enumerate(COURSE_STATS):
             s.courses_taken[stat] = int(line[12 + i])
+        # Saves made before semesters existed do not track time spent studying.
+        if len(line) > 12 + len(COURSE_STATS):
+            s.turns_studied = int(line[12 + len(COURSE_STATS)])
         students.append(s)
 
     n_missions = int(file.readline())
@@ -90,4 +96,4 @@ def load_state(rand, filename=SAVE_FILE_NAME, default: bool=False):
         ))
 
     file.close()
-    return month, money, total_failed_missions, students, missions, n_of_dead_students
+    return turn, money, total_failed_missions, students, missions, n_of_dead_students, n_of_graduated_students

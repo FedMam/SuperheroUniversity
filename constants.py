@@ -7,9 +7,12 @@ init(autoreset=True)
 # ==========================================
 # CONSTANTS (Easily adjustable for balance)
 # ==========================================
-START_YEAR = 2036
-END_YEAR = 2040                       # 48 turns in total
-TOTAL_TURNS = (END_YEAR - START_YEAR) * 12
+START_YEAR = 2040                     # the first semester of the game is Fall 2040
+TOTAL_TURNS = 48                      # 24 years, two semesters per year
+TURNS_PER_YEAR = 2                    # each turn is one semester: Fall or Spring
+SEMESTERS = ['Fall', 'Spring']
+END_YEAR = START_YEAR + (TOTAL_TURNS - 1) // TURNS_PER_YEAR  # 2063: year of the last semester
+MIN_TURNS_TO_GRADUATE = 8             # a student needs 8 semesters (4 years) of study
 INITIAL_MONEY = 100
 INITIAL_STUDENTS = 3
 INITIAL_MISSIONS = 3                  # missions are always 3 now
