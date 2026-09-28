@@ -16,7 +16,7 @@ MIN_TURNS_TO_GRADUATE = 8             # a student needs 8 semesters (4 years) of
 INITIAL_MONEY = 100
 INITIAL_STUDENTS = 3
 INITIAL_MISSIONS = 3                  # missions are always 3 now
-MAX_STUDENTS = 15                     # dormitory capacity
+MAX_STUDENTS = 21                     # dormitory capacity
 MAX_MISSION_FAILS = 5
 
 STUDENT_BASE_COST = 25

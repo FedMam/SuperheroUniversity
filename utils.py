@@ -249,15 +249,15 @@ def display_missions(missions, assignments, predictions):
 # ==========================================
 # MISSIONS
 # ==========================================
-MAX_MINIONS = 10
+MAX_MINIONS = 16
 def generate_missions(turn, rand):
     missions = []
 
     turns_passed = turn
-    max_hp = 50 + 50 * turns_passed
-    max_mdmg = 4 + 4 * turns_passed
-    max_rdmg = 4 + 4 * turns_passed
-    max_nm = turns_passed // 3
+    max_hp = 50 + 100 * turns_passed
+    max_mdmg = 4 + 8 * turns_passed
+    max_rdmg = 4 + 8 * turns_passed
+    max_nm = turns_passed // 2
     max_k = turns_passed // 4
 
     for _ in range(INITIAL_MISSIONS):
