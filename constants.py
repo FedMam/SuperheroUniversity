@@ -96,13 +96,13 @@ COURSE_GROWTH_DEFAULT = {"HP": 25, "MP": 1, "DMG": 4, "DEF": 0.2, "AGL": 0.2}
 
 # Per-power overrides for per-course growth.
 POWER_GROWTHS = {
-    "Strength": {"DMG": 8, "AGL": 0.1},
+    "Strength": {"DMG": 8, 'PWR': 12, "AGL": 0.1},
     "Speed": {"AGL": 1.0, "DMG": 2, "DEF": 0.1},
     "Flight": {"DEF": 1.0, "DMG": 2, "AGL": 0.1},
     "Fire": {"PWR": 6},
     "Slash": {"DMG": 6},
     "Laser": {"PWR": 15},
-    "Tech": {"HP": 30, "DEF": 0.3},
+    "Tech": {"HP": 30, "DEF": 0.3, 'AGL': 0.15},
     "Solar": {"PWR": 30, "HP": 10},
     "Nature": {"HP": 50},
     "Shield": {"DEF": 0.5},

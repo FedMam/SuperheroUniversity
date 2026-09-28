@@ -299,86 +299,83 @@ MACHINES = 'Machine,Robot,Device,Suit,Army,Mobile,Team,Gang,Bot,Ray,Battalion,En
 # Some superpowers have their own names for other courses too.
 # ==========================================
 COURSE_NAMES = {
-    'HP': 'First Aid,Emergency Medicine,Nutrition,Rehabilitation,Physiotherapy,Field Care,Resilience Training,Fortitude Practice'.split(','),
-    'MP': 'Aerobics,Meditation,Breath Control,Mana Flow,Focus Drills,Energy Balance,Rhythm Gymnastics,Inner Calm'.split(','),
-    'DMG': 'Martial Arts,Boxing,Striking,Combat Drills,Power Training,Close Combat,Iron Fist,Knuckle Work'.split(','),
-    'PWR': 'Superpower Control,Power Manifestation,Ability Mastery,Power Flow,Potential Release,Inner Power,Ability Boost,Focus Fire'.split(','),
-    'DEF': 'Iron Body,Toughness,Resilience,Fortitude,Grounding,Hardening,Brace Training,Unyielding Stance'.split(','),
-    'AGL': 'Parkour,Agility Drills,Balance,Acrobatics,Dodge Training,Reflex Work,Mobility,Footwork'.split(','),
+    'HP': 'First Aid,Advanced Medicine,Physiotherapy,Field Care,Stamina Training,Fortitude Practice'.split(','),
+    'MP': 'Aerobics,Meditation,Breathing Gymnastics,Rhythm Gymnastics,Willpower Course,Discipline,Superhero Moral'.split(','),
+    'DMG': 'Boxing,Karate,Muay Thai,Wrestling,MMA,Jiu Jitsu,Sambo'.split(','),
+    'PWR': 'Superpower Science'.split(','),
+    'DEF': 'Tactics,Strategy,Self-Defense,High-Pressure Training,Situational Awareness,Life Safety'.split(','),
+    'AGL': 'Agility Drills,Parkour,Balance,Acrobatics,Reflex Training'.split(','),
 }
 
 POWER_COURSE_NAMES = {
     'Strength': {
-        'DMG': 'Weightlifting,Iron Pump,Squat Rack,Powerlifting,Deadlift,Brute Press,Muscle Build,Herculean Lift'.split(','),
-        'PWR': 'Raw Power,Overdrive Muscle,Titanic Force,Peak Strength,Muscle Surge,Force Unleashed,Power Press,Primal Might'.split(','),
+        'PWR': 'Weightlifting,Powerlifting,Muscle Build,Raw Strength,Heavy Athletics'.split(','),
     },
     'Speed': {
-        'AGL': 'Sprint Drills,Dash Practice,Velocity Runs,Quickstep,Blink Drills,Footspeed,Turbo Steps,Lightning Footwork'.split(','),
-        'PWR': 'Velocity Surge,Turbo Boost,Quicksilver,Momentum,Acceleration,Hyperdrive,Speed Force,Afterburner'.split(','),
+        'PWR': 'Sprint,Ultramarathon,Trail Running,Hurdle Race,Footwork'.split(','),
     },
     'Flight': {
-        'DEF': 'Aerial Defense,Hover Shielding,Sky Balance,Wind Sailing,Glide Practice,Aerial Stance,Air Cushion,Altitude Control'.split(','),
-        'PWR': 'Sky Power,Ascension,Air Superiority,Lift,Thrust,Glide Surge,Wing Power,Aerial Force'.split(','),
+        'PWR': 'Aerodynamics,Aeronautics,Navigation,Aviation Safety,Flight Physics'.split(','),
     },
     'Fire': {
-        'PWR': 'Heat Surge,Inferno,Combustion,Pyro Force,Blaze Up,Overheat,Incinerate,Furnace'.split(','),
+        'PWR': 'Flammable Materials,High-Temperature Physics,Plasma Physics,Fire Dynamics'.split(','),
     },
     'Slash': {
-        'DMG': 'Swordplay,Blade Work,Cleave Training,Edge Practice,Saber Drills,Slasher Course,Cutting Form,Fencing'.split(','),
-        'PWR': 'Slash Force,Cleave Power,Edge Force,Fury Cut,Blade Surge,Rend,Sever,Pierce'.split(','),
+        'PWR': 'Fencing,Stage Combat,Sword Fight,Ninjutsu,Stealth,Weapons History'.split(',')
     },
     'Electric': {
-        'PWR': 'Volt Surge,Power Surge,Charge Up,Voltage Spike,Overload,Spark Force,Amperage,Wattage'.split(','),
+        'PWR': 'Electrodynamics,Electromagnetism,Lightning Study,Field Theory,Circuit Analysis'.split(','),
     },
     'Laser': {
-        'PWR': 'Beam Power,Focus,Laser Burn,Optical Overcharge,Intensity,Coherence Boost,Ray Surge,Amplification'.split(','),
+        'PWR': 'Optics,Laser Technologies,Precision Training,Laser Physics,Photonics'.split(','),
     },
     'Tech': {
-        'HP': 'Armor Plating,Emergency Repair,Maintenance,Dampening,Reinforcement,Hardening Suite,Servo Care,Cooling Unit'.split(','),
-        'MP': 'Buy Ammo,Power Cell,Battery Charge,Capacitor Fill,Fuel Intake,Software Patch,Reload,Overclock'.split(','),
-        'PWR': 'Power Core,Overclock,System Surge,Firmware Flash,Cybernetic Boost,CPU Spike,Energy Charge,Logic Boost'.split(','),
+        'HP': 'Emergency Repair,Maintenance,Armor Plating,Cooling Unit,Preserving Life Conditions,Generator'.split(','),
+        'MP': 'Ammo Capacity,Power Cell,Fuel Intake,Software Patch,Overclock'.split(','),
+        'PWR': 'Robotics,Artificial Intelligence,Railgun,Machinegun,Blaster,Plasma Gun,Assist Drone,Missile Launcher,Ballistics'.split(','),
     },
     'Solar': {
-        'PWR': 'Solar Overcharge,Sunburst,Radiance,Solar Flare,Heliacal Force,Sun Power,Photon Surge,Corona Charge'.split(','),
+        'PWR': 'Solar Astrophysics,Helioseismology,Solar Energy,Superflare Study,Particle Accelerator Physics,Exawatt Lasers'.split(','),
     },
     'Weather': {
-        'PWR': 'Storm Surge,Climatic Force,Weather Whip,Tempest,Front Advance,Pressure Drop,Forecast,Atmospheric Push'.split(','),
+        'PWR': 'Meteorology,Seismology,Environmental Science,Climate Dynamics,Weather Control Technology'.split(','),
     },
     'Nature': {
-        'PWR': 'Growth,Bloom,Wild Surge,Photosynthesis,Nourish,Root Force,Flourish,Green Power'.split(','),
+        'PWR': 'Photosynthesis,Ecology,Animal Science,Wilderness Reclamation,Botany,Horticulture,Landscape Architecture,Soil Science'.split(','),
     },
     'Shield': {
-        'PWR': 'Bulwark,Bastion Force,Barrier,Aegis Power,Shelter,Protection,Fortify,Unyielding Surge'.split(','),
+        'PWR': 'Forcefield Study,Field Theory,Mechanics Module,Classical Dynamics,Fundamental Forces'.split(','),
     },
     'Elastic': {
-        'PWR': 'Stretch,Bounce,Snapback,Elastic Surge,Spring Force,Flex,Rebound,Bungee Power'.split(','),
+        'PWR': 'Rubber-Band Yoga,Yoga,Pilates,Contortion,Gymnastics,Ballet,Stretch Therapy'.split(','),
     },
     'Energy': {
-        'PWR': 'Energy Surge,Vitality,Stamina Boost,Metabolic Fire,Endurance,Kinetic Charge,Essence,Spark of Life'.split(','),
+        'PWR': 'Vitality,Biochemistry,Anatomy,Advanced Physiology,Healthy Lifestyle,Hormone Study,Vitamin Study,Metabolism'.split(','),
     },
     'Water': {
-        'PWR': 'Tidal Force,Current,Flood,Pressure Surge,Crushing Depth,Hydro Force,Cascade,Wave Power'.split(','),
+        'PWR': 'Hydrology,Oceanology,Hydrogeology,Marine Biology,Oceanography,Aquaculture,Swimming,Echolocation'.split(','),
     },
     'Ice': {
-        'PWR': 'Frost Surge,Deep Freeze,Cryo,Glacial Force,Chill,Permafrost,Icicle Surge,Cold Snap'.split(','),
+        'PWR': 'Cryogenics,Quantum Fluids,Nanokelvin Methodology,Superconductivity,Glaciology,Arctic Studies'.split(','),
     },
     'Acid': {
-        'PWR': 'Caustic Surge,Dissolve,Corrosion,Meltdown,Acid Burn,Decompose,Erode,Caustic Force'.split(','),
+        'PWR': 'Corrosion,Toxicology,Pharmacology,Analytical Chemistry,Chemical Engineering,Microbiology,Virology'.split(','),
     },
     'Mind': {
-        'PWR': 'Mind Force,Psy Surge,Telepathy,Clarity,Mindwave,Suggestion,Empathy,Thought Surge'.split(','),
+        'PWR': 'Cognitive Science,Neuroscience,Psychology,Philosophy,Sociology,Information Gathering'.split(','),
     },
     'Gravity': {
-        'PWR': 'Gravity Surge,Mass,Pull,Crush,Distortion,Field Force,Attraction,Graviton'.split(','),
+        'PWR': 'Astrophysics,Mathematical Physics,Field Theory,Quantum Fields,Gravitational Wave Physics'.split(','),
     },
     'Time': {
-        'PWR': 'Chrono Boost,Temporal Surge,Haste,Rewind,Momentum,Flow,Chronology,Instant'.split(','),
+        'PWR': 'Relativity Theory,Time Management,History,Philosophy of Time,Archaeology'.split(','),
     },
     'Cyber': {
-        'PWR': 'Cyber Surge,Data Surge,Mind Hack,Digital Force,Bit Burst,Net Power,Plug,Node'.split(','),
+        'MP': 'Hardware Upgrade,Software Patch,Internet Connection,Typing Trainer,Burnout Management,Stress Management'.split(','),
+        'PWR': 'Scripting,Computer Networks,Cybersecurity,Malware Analysis,Digital Forensics,Penetration Testing,Cryptography'.split(','),
     },
     'Sonic': {
-        'PWR': 'Sonic Surge,Sound Wave,Crescendo Boost,Decibel Bomb,Bass Force,Echo Blast,Resonance,Vibra Course'.split(','),
+        'PWR': 'Sound Physics,Resonance,Audio Engineering,Acoustics,Music Theory,Singing,Rhetorics,Vocal Performance'.split(','),
     },
 }
 
