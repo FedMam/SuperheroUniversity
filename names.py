@@ -260,6 +260,8 @@ NICKNAMES_GRAVITY = 'Gravity,Friction,Tension,Thrust,Drag,Lift,Torque,Impulse,Mo
 NICKNAMES_TIME = 'Time,Clock,Chronos,Hourglass,Pendulum,Metronome,Moment,Instant,Epoch,Era,Season,Tide,Cycle,Rhythm,Tempo,Pulse,Kairos,Legacy,Dragon,Wyvern,Griffin,Phoenix,Unicorn,Pegasus,Chimera,Manticore,Basilisk,Hydra,Cerberus,Kraken,Minotaur,Centaur,Simurgh,Qilin,Fenghuang,Ifrit,Roc,Garuda,Yeti,Pixiu,Kitsune,Tanuki,Ouroboros,Quetzalcoatl,Serpent,Thunderbird'.split(',')
 NICKNAMES_CYBER = 'Cyber,Cipher,Bit,Byte,Kilobyte,Kernel,Syscall,Firewall,Backdoor,Trojan,Virus,Worm,Zombie,Bot,Rootkit,Keylogger,Ransomware,Phish,Spoof,Sniffer,Proxy,Tunnel,Packet,Latency,Hex,Binary,Neural,Net,Bug,Crash,Glitch,Script,Compiler,Debugger,Recursion,Mutex,Cache,Stack,Heap,Bruteforce,Malware,Exploit,Payload,Botnet,Digit,Node,Mesh,Syntax,Hacker,Netrunner,Codepoet'.split(',')
 NICKNAMES_SONIC = 'Sonic,Sound,Echo,Resonance,Reverb,Vibration,Frequency,Pitch,Tone,Timbre,Chord,Rhythm,Beat,Tempo,Melody,Harmony,Aria,Chorus,Crescendo,Decibel,Forte,Treble,Bass,Alto,Tenor,Soprano,Baritone,Sonata,Symphony,Serenade,Anthem,Overture,Riff,Cymbal,Gong,Trumpet,Horn,Whistle,Hum,Buzz,Ring,Clang,Chime,Bat,Moth,Owl,Wolf,Fox,Dolphin,Sealion,Elephant,Kangaroo Rat,Whale,Shrew,Tenrec,Aye-aye,Swiftlet,Oilbird,Dormouse'.split(',')
+NICKNAMES_NUCLEAR = 'Atom,Radiation,Isotope,Fission,Fusion,Nucleus,Neutron,Proton,Electron,Radium,Uranium,Plutonium,Polonium,Thorium,Cesium,Strontium,Iodine,Cobalt,Ruthenium,Americium,Curium,Berkelium,Californium,Fermium,Einsteinium,Mendelevium,Nobelium,Lawrencium,Dubnium,Rutherford,Bohr,Fermi,Curie,Meitner,Oppenheimer,Szilard,Lawrence,Chadwick,Seaborg,Dirac,Heisenberg,Teller,Hahn,Frisch,Strassmann,Soddy,Ramsay,Becquerel,Thomson,Millikan,Planck,Pauli,Debye,Sommerfeld,Bethe,Alvarez'.split(',')
+NICKNAMES_PORTAL = 'Wormhole,Einstein,Branes,Tensor,Manifold,Spacetime,Event,Entanglement,Quantum,Teleport,Rift,Gateway,Threshold,Schwarzschild,Kerr,Reissner,Nordstrom,Hawking,Penrose,Thorne,Morris,Novikov,Visser,Alcubierre,Kaluza,Klein,Unruh,Bekenstein,Susskind,Hooft,Maldacena,Giddings,Polchinski,Randall,Sundrum,Strominger,Vafa,Witten,Hartle,Hawking,Page,Preskill,DeWitt,Wheeler,Feynman,Gravitation,Geodesic,Topology,Singularity,Parallel,Tesseract,Hypercube,Transdimension,Interdimensional,Multiverse,Metaverse,Chronon,Anomaly,Nexus,Vortex,Stargate,Jumpgate,Slipstream,Subspace,Hyperspace'.split(',')
 
 FACULTY_NICKNAMES = {
     'Strength': NICKNAMES_STRENGTH,
@@ -284,6 +286,8 @@ FACULTY_NICKNAMES = {
     'Time': NICKNAMES_TIME,
     'Cyber': NICKNAMES_CYBER,
     'Sonic': NICKNAMES_SONIC,
+    'Nuclear': NICKNAMES_NUCLEAR,
+    'Portal': NICKNAMES_PORTAL,
 }
 
 # ==========================================
@@ -376,6 +380,12 @@ POWER_COURSE_NAMES = {
     },
     'Sonic': {
         'PWR': 'Sound Physics,Resonance,Audio Engineering,Acoustics,Music Theory,Singing,Rhetorics,Vocal Performance'.split(','),
+    },
+    'Nuclear': {
+        'PWR': 'Nuclear Physics,Radioactivity,Particle Physics,Fission Studies,Fusion Research,Quantum Mechanics'.split(','),
+    },
+    'Portal': {
+        'PWR': 'General Relativity,Topology,Quantum Field Theory,Exotic Matter,Brane Cosmology,Wormhole Theory,Science Fiction Writing'.split(','),
     },
 }
 

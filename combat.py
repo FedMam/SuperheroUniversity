@@ -89,11 +89,19 @@ def _apply_mind_defection(mission: Mission, heroes: List[Student], rand, verbose
                     print(f'{_display_name(mn)} defects from {Style.BRIGHT}{mission.villain.name}{Style.RESET_ALL} and joins the heroes!')
     return converted
 
-def _lowest_hp_enemy(mission: Mission):
+def _lowest_hp_enemy(mission: Mission, attacker=None, heroes=None, villain_immunities=None):
     alive_minions = [m for m in mission.villain.minions if m.hp > 0]
+    villain_alive = mission.villain.hp > 0
+
+    if attacker is not None and getattr(attacker, 'power', None) == 'Portal':
+        portal_blocked = False
+        if villain_immunities is not None and 'Portal' in villain_immunities:
+            portal_blocked = True
+        if not portal_blocked and villain_alive:
+            return mission.villain
     if alive_minions:
         return min(alive_minions, key=lambda m: m.hp)
-    if mission.villain.hp > 0:
+    if villain_alive:
         return mission.villain
     return None
 
@@ -253,7 +261,7 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
             pwr_color = POWER_COLORS[hero.power]
 
             if class_ == 'Attack':
-                target = _lowest_hp_enemy(mission)
+                target = _lowest_hp_enemy(mission, attacker=hero, villain_immunities=immunities)
                 if target is None:
                     continue
                 use_super = _attack_uses_super(hero, target, mission, heroes)
@@ -283,7 +291,7 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
                     if verbose:
                         print(f"{hero_name} uses {pwr_color}{hero.power}{Style.RESET_ALL} to heal {t_name} for {healed} HP! Remaining HP: {heal_target.hp}")
                 else:
-                    target = _lowest_hp_enemy(mission)
+                    target = _lowest_hp_enemy(mission, attacker=hero, villain_immunities=immunities)
                     if target is None:
                         continue
                     target.hp -= hero.dmg
@@ -301,7 +309,7 @@ def run_mission(mission: Mission, heroes: List[Student], rand, verbose: bool=Fal
                     if verbose:
                         print(f"{hero_name} uses {pwr_color}{hero.power}{Style.RESET_ALL} on ALL enemies for {hero.pwr} damage each!")
                 else:
-                    target = _lowest_hp_enemy(mission)
+                    target = _lowest_hp_enemy(mission, attacker=hero, villain_immunities=immunities)
                     if target is None:
                         continue
                     target.hp -= hero.dmg

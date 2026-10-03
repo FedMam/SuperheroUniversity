@@ -37,7 +37,7 @@ SUPERPOWERS = [
     "Electric", "Laser", "Tech", "Solar", "Weather",
     "Nature", "Shield", "Elastic", "Energy", "Water",
     "Ice", "Acid", "Mind", "Gravity", "Time", "Cyber",
-    "Sonic",
+    "Sonic", "Nuclear", "Portal",
 ]
 
 POWER_CLASSES = {
@@ -48,7 +48,7 @@ POWER_CLASSES = {
     "Elastic": "Attack", "Energy": "Heal", "Water": "Heal",
     "Ice": "Attack", "Acid": "Splash", "Mind": "Attack",
     "Gravity": "Splash", "Time": "Heal", "Cyber": "Splash",
-    "Sonic": "Splash",
+    "Sonic": "Splash", "Nuclear": "Splash", "Portal": "Attack",
 }
 
 # Unique two-letter codes used to display powers in the immunities list.
@@ -58,7 +58,7 @@ POWER_CODES = {
     "Solar": "So", "Weather": "We", "Nature": "Na", "Shield": "Sh",
     "Elastic": "El", "Energy": "En", "Water": "Wa", "Ice": "Ic",
     "Acid": "Ac", "Mind": "Mi", "Gravity": "Gr", "Time": "Ti",
-    "Cyber": "Cy", "Sonic": "Sn",
+    "Cyber": "Cy", "Sonic": "Sn", "Nuclear": "Nu", "Portal": "Po",
 }
 CODE_TO_POWER = {code: power for power, code in POWER_CODES.items()}
 
@@ -85,6 +85,8 @@ POWER_COLORS = {
     "Time": Fore.WHITE,
     "Cyber": Fore.LIGHTGREEN_EX,
     "Sonic": Fore.LIGHTCYAN_EX,
+    "Nuclear": Fore.LIGHTYELLOW_EX,
+    "Portal": Fore.MAGENTA,
 }
 
 # Power class defaults for PWR.
@@ -107,6 +109,7 @@ POWER_GROWTHS = {
     "Nature": {"HP": 50},
     "Shield": {"DEF": 0.5},
     "Elastic": {"AGL": 0.5},
+    "Nuclear": {"PWR": 15, "HP": 10},
 }
 
 # Buffs applied to the whole hero team at mission start (stat, factor).
