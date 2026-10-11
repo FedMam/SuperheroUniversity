@@ -142,7 +142,7 @@ def _announce_enemy_deaths(alive_villains, verbose: bool=False):
 
 def _handle_ally_death(ally, revived, time_revives: int, dead_heroes, verbose: bool=False) -> int:
     """Time heroes get one revival each. Only real heroes ever join the dead list."""
-    if time_revives > 0 and ally not in revived:
+    if time_revives > 0 and ally not in revived and isinstance(ally, Student):
         revived.add(ally)
         ally.hp = ally.max_hp / 2
         if verbose:
