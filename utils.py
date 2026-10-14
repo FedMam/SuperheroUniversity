@@ -14,18 +14,21 @@ from constants import (
     COURSE_GROWTH_DEFAULT,
     COURSE_STATS,
     ENABLE_BATTLE_PREDICTIONS,
+    ENEMY_BUFFS,
     INITIAL_MISSIONS,
     MAX_COURSES_PER_STAT,
     POWER_CLASSES,
     POWER_CODES,
     POWER_COLORS,
-    POWER_DESCRIPTIONS,
     POWER_GROWTHS,
+    POWER_SPECIALS,
+    POWER_STORIES,
     PWR_BASE,
     PWR_GROWTH_DEFAULT,
     SEMESTERS,
     START_YEAR,
     SUPERPOWERS,
+    TEAM_BUFFS,
     TURNS_PER_YEAR,
 )
 from models import Mission, Student, Villain
@@ -253,6 +256,46 @@ CLASS_DESCRIPTIONS = {
     "Splash": "Super-attack deals PWR damage to ALL enemies.",
 }
 
+# Display names for the lowercase stat keys used by TEAM_BUFFS / ENEMY_BUFFS.
+BUFF_STAT_LABELS = {
+    'hp': 'HP', 'mp': 'MP', 'dmg': 'DMG', 'pwr': 'PWR',
+    'def': 'DEF', 'agl': 'AGL', 'mdmg': 'melee damage',
+    'rdmg': 'ranged damage', 'all': 'ALL stats',
+}
+
+def _join_with_and(items):
+    if len(items) <= 1:
+        return ''.join(items)
+    return ', '.join(items[:-1]) + f' and {items[-1]}'
+
+def _buff_sentence(prefix, sign, stat, factor, singular, plural):
+    pct = round(factor * 100)
+    if stat == 'all':
+        return f'{prefix}: {sign}{pct}% to ALL stats of every {singular} at mission start.'
+    return f'{prefix}: {sign}{pct}% {BUFF_STAT_LABELS[stat]} to all {plural} at mission start.'
+
+def describe_power_gameplay(power):
+    """Build the gameplay blurb from the balance constants plus POWER_SPECIALS."""
+    parts = [CLASS_DESCRIPTIONS[POWER_CLASSES[power]]]
+
+    growth = POWER_GROWTHS.get(power, {})
+    if growth:
+        boosts = [f'{stat} (+{value})' for stat, value in growth.items()]
+        parts.append(f"Courses boost {_join_with_and(boosts)} per buy.")
+
+    if power in TEAM_BUFFS:
+        stat, factor = TEAM_BUFFS[power]
+        parts.append(_buff_sentence('TEAM BUFF', '+', stat, factor, 'hero', 'heroes'))
+
+    if power in ENEMY_BUFFS:
+        stat, factor = ENEMY_BUFFS[power]
+        parts.append(_buff_sentence('ENEMY DEBUFF', '-', stat, factor, 'enemy', 'enemies'))
+
+    if power in POWER_SPECIALS:
+        parts.append(f'SPECIAL: {POWER_SPECIALS[power]}')
+
+    return ' '.join(parts)
+
 def display_superpower_encyclopedia():
     """List every superpower with its class, story and gameplay description."""
     print(f"\n{'='*18} SUPERPOWER ENCYCLOPEDIA {'='*18}")
@@ -267,10 +310,9 @@ def display_superpower_encyclopedia():
         print(f"\n--- {class_name.upper()} CLASS ({len(powers)}) ---")
         for power in powers:
             color = POWER_COLORS[power]
-            info = POWER_DESCRIPTIONS[power]
             print(f"\n{Style.BRIGHT}{color}{power}{Style.RESET_ALL} [{class_name}]")
-            print(f"   Story:    {info['story']}")
-            print(f"   Gameplay: {info['gameplay']}")
+            print(f"   Story:    {POWER_STORIES[power]}")
+            print(f"   Gameplay: {describe_power_gameplay(power)}")
 
     print()
     input('Press [ENTER] to return to the menu: ')

@@ -112,104 +112,42 @@ POWER_GROWTHS = {
     "Nuclear": {"PWR": 15, "HP": 10},
 }
 
-# Story-wise and gameplay-wise descriptions shown in the Superpower Encyclopedia.
-POWER_DESCRIPTIONS = {
-    "Strength": {
-        "story": "Raw muscle that can lift tanks and level buildings.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. Courses boost DMG (+8), PWR (+12) and AGL (+0.1) per buy.",
-    },
-    "Flight": {
-        "story": "Soars above the battlefield on wings of light.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. Courses boost DEF (+1.0), DMG (+2) and AGL (+0.1) per buy.",
-    },
-    "Speed": {
-        "story": "Moves faster than the eye can follow.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. Courses boost AGL (+1.0), DMG (+2) and DEF (+0.1) per buy.",
-    },
-    "Fire": {
-        "story": "Engulfs the field in roaring flame.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. Courses boost PWR (+6) per buy.",
-    },
-    "Slash": {
-        "story": "Razor claws and blade arcs that cut through armor.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. Courses boost DMG (+6) per buy.",
-    },
-    "Electric": {
-        "story": "Channels lightning through every nerve.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. TEAM BUFF: +25% PWR to all heroes at mission start.",
-    },
-    "Laser": {
-        "story": "Fires focused beams of coherent light.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. Courses boost PWR (+15) per buy.",
-    },
-    "Tech": {
-        "story": "An arsenal of gadgets, drones and improvised devices.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. Courses boost HP (+30), DEF (+0.3) and AGL (+0.15) per buy.",
-    },
-    "Solar": {
-        "story": "Draws on the blinding power of the sun.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. Courses boost PWR (+30) and HP (+10) per buy.",
-    },
-    "Weather": {
-        "story": "Commands storm, wind and rain at will.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. TEAM BUFF: +50% MP to all heroes at mission start.",
-    },
-    "Nature": {
-        "story": "Commune with living things; their energy mends flesh.",
-        "gameplay": "Super-attack heals a teammate by PWR. Courses boost HP (+50). TEAM BUFF: +25% HP to all heroes at mission start.",
-    },
-    "Shield": {
-        "story": "Projects barriers of solid force.",
-        "gameplay": "Super-attack heals a teammate by PWR. Courses boost DEF (+0.5). TEAM BUFF: +25% DEF to all heroes at mission start.",
-    },
-    "Elastic": {
-        "story": "Stretches and reshapes the body at will.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. Courses boost AGL (+0.5). TEAM BUFF: +25% AGL to all heroes at mission start.",
-    },
-    "Energy": {
-        "story": "Channels pure life force into allies.",
-        "gameplay": "Super-attack heals a teammate by PWR. TEAM BUFF: +10% to ALL stats of every hero at mission start.",
-    },
-    "Water": {
-        "story": "Bends the tides to wash away the enemy's strength.",
-        "gameplay": "Super-attack heals a teammate by PWR. ENEMY DEBUFF: -25% melee damage to all enemies at mission start.",
-    },
-    "Ice": {
-        "story": "Freezes foes to the bone.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy and halves the victim's melee and ranged damage (once per target).",
-    },
-    "Acid": {
-        "story": "Dissolves armor and flesh alike.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. ENEMY DEBUFF: -25% HP to all enemies at mission start.",
-    },
-    "Mind": {
-        "story": "Telepathic control over weaker wills.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. SPECIAL: each Mind hero has a 20% chance per minion to make it defect and fight for the heroes.",
-    },
-    "Gravity": {
-        "story": "Crushes enemies under their own weight.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. ENEMY DEBUFF: -25% ranged damage to all enemies at mission start.",
-    },
-    "Time": {
-        "story": "Rewinds a hero's final moment.",
-        "gameplay": "Super-attack heals a teammate by PWR. SPECIAL: each Time hero grants the team one revival at half HP (defected minions are not revived).",
-    },
-    "Cyber": {
-        "story": "Hacks villain technology in real time.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. ENEMY DEBUFF: -10% to ALL stats of every enemy at mission start.",
-    },
-    "Sonic": {
-        "story": "Unleashes deafening shockwaves.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. TEAM BUFF: +25% DMG to all heroes at mission start.",
-    },
-    "Nuclear": {
-        "story": "Unleashes controlled atomic blasts.",
-        "gameplay": "Super-attack deals PWR damage to ALL enemies. Courses boost PWR (+15) and HP (+10) per buy.",
-    },
-    "Portal": {
-        "story": "Opens gateways through space.",
-        "gameplay": "Super-attack deals PWR damage to the weakest enemy. SPECIAL: the super-attack strikes the main villain directly, bypassing minions.",
-    },
+# Story blurbs for the Superpower Encyclopedia. Everything gameplay-related
+# (class, course growth, team buffs, enemy debuffs) is derived from the balance
+# constants above; only mechanics that cannot be inferred live in POWER_SPECIALS.
+POWER_STORIES = {
+    "Strength": "Raw muscle that can lift tanks and level buildings.",
+    "Flight": "Soars above the battlefield on wings of light.",
+    "Speed": "Moves faster than the eye can follow.",
+    "Fire": "Engulfs the field in roaring flame.",
+    "Slash": "Razor claws and blade arcs that cut through armor.",
+    "Electric": "Channels lightning through every nerve.",
+    "Laser": "Fires focused beams of coherent light.",
+    "Tech": "An arsenal of gadgets, drones and improvised devices.",
+    "Solar": "Draws on the blinding power of the sun.",
+    "Weather": "Commands storm, wind and rain at will.",
+    "Nature": "Commune with living things; their energy mends flesh.",
+    "Shield": "Projects barriers of solid force.",
+    "Elastic": "Stretches and reshapes the body at will.",
+    "Energy": "Channels pure life force into allies.",
+    "Water": "Bends the tides to wash away the enemy's strength.",
+    "Ice": "Freezes foes to the bone.",
+    "Acid": "Dissolves armor and flesh alike.",
+    "Mind": "Telepathic control over weaker wills.",
+    "Gravity": "Crushes enemies under their own weight.",
+    "Time": "Rewinds a hero's final moment.",
+    "Cyber": "Hacks villain technology in real time.",
+    "Sonic": "Unleashes deafening shockwaves.",
+    "Nuclear": "Unleashes controlled atomic blasts.",
+    "Portal": "Opens gateways through space.",
+}
+
+# Extra mechanics that are not captured by the balance constants above.
+POWER_SPECIALS = {
+    "Ice": "The super-attack also halves the victim's melee and ranged damage (once per target).",
+    "Mind": "Each Mind hero has a 20% chance per minion to make it defect and fight for the heroes.",
+    "Time": "Each Time hero grants the team one revival at half HP; defected minions are not revived.",
+    "Portal": "The super-attack strikes the main villain directly, bypassing minions.",
 }
 
 # Buffs applied to the whole hero team at mission start (stat, factor).
