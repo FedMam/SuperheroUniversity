@@ -34,6 +34,7 @@ from utils import (
     display_student,
     display_students,
     display_study_progress,
+    display_superpower_encyclopedia,
     generate_candidate,
     generate_course_names,
     generate_missions,
@@ -80,6 +81,7 @@ Powers belong to three classes:
   - Heal:   super-attack heals a teammate by PWR.
   - Splash: super-attack deals PWR damage to ALL enemies.
 Powers also carry team-wide or enemy-wide side effects (buffs / debuffs).
+During the game, press ? to open the Superpower Encyclopedia for a full list of powers and their effects.
 
 [ MISSIONS & COMBAT ]
 Always 3 missions per semester. Assign students to stop supervillains. Combat is automatic:
@@ -151,6 +153,7 @@ lose to a villain is -1.
                 print('Press ; (semicolon) to select the last managed student.')
                 print('Press . (dot) to buy a course for all the students.')
                 print('Press , (comma) to review new student candidates.')
+                print('Press ? to open the Superpower Encyclopedia.')
                 print('After all students have been assigned, press Enter to proceed.')
                 print()
                 print('Your command: ', end='')
@@ -171,6 +174,8 @@ lose to a villain is -1.
 
                 if cmd == ',':
                     current_action = 'accept'
+                elif cmd == '?':
+                    current_action = 'encyclopedia'
                 elif cmd == '.':
                     current_action = 'manage'
                     current_student = 'all'
@@ -250,6 +255,10 @@ lose to a villain is -1.
                             input('Press [ENTER] to continue: ')
                     elif key == ' ':
                         current_action = 'idle'
+            elif current_action == 'encyclopedia':
+                clear_screen()
+                display_superpower_encyclopedia()
+                current_action = 'idle'
             elif current_action == 'manage':
                 s = current_student
                 last_managed_student = current_student

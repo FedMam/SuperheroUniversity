@@ -19,6 +19,7 @@ from constants import (
     POWER_CLASSES,
     POWER_CODES,
     POWER_COLORS,
+    POWER_DESCRIPTIONS,
     POWER_GROWTHS,
     PWR_BASE,
     PWR_GROWTH_DEFAULT,
@@ -245,6 +246,34 @@ def display_missions(missions, assignments, predictions):
         else:
             print(f"   Minions: None")
         print(f"   Prize: ${m.prize}")
+
+CLASS_DESCRIPTIONS = {
+    "Attack": "Super-attack deals PWR damage to the weakest enemy.",
+    "Heal": "Super-attack heals a teammate by PWR.",
+    "Splash": "Super-attack deals PWR damage to ALL enemies.",
+}
+
+def display_superpower_encyclopedia():
+    """List every superpower with its class, story and gameplay description."""
+    print(f"\n{'='*18} SUPERPOWER ENCYCLOPEDIA {'='*18}")
+    print("Powers belong to three classes:")
+    for class_name, desc in CLASS_DESCRIPTIONS.items():
+        print(f"  {Style.BRIGHT}{class_name}{Style.RESET_ALL}: {desc}")
+    print(f"{Style.DIM}A villain immune to a power ignores EVERY effect of it: no super-attack, "
+          f"no buff and no debuff.{Style.RESET_ALL}")
+
+    for class_name in CLASS_DESCRIPTIONS:
+        powers = [p for p in SUPERPOWERS if POWER_CLASSES[p] == class_name]
+        print(f"\n--- {class_name.upper()} CLASS ({len(powers)}) ---")
+        for power in powers:
+            color = POWER_COLORS[power]
+            info = POWER_DESCRIPTIONS[power]
+            print(f"\n{Style.BRIGHT}{color}{power}{Style.RESET_ALL} [{class_name}]")
+            print(f"   Story:    {info['story']}")
+            print(f"   Gameplay: {info['gameplay']}")
+
+    print()
+    input('Press [ENTER] to return to the menu: ')
 
 # ==========================================
 # MISSIONS
